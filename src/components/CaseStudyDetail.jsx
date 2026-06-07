@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
 import { 
   ArrowLeft, ArrowRight, Layout, Target, Users, LayoutDashboard, 
   Search, Smartphone, Settings, ShieldCheck, CheckCircle, 
@@ -7,6 +8,22 @@ import {
 } from 'lucide-react';
 import { caseStudies } from './CaseStudies';
 import './CaseStudyDetail.css';
+
+const StatCounter = ({ value, label, icon }) => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5 }}
+      className="impact-card glass"
+    >
+      <div className="impact-icon">{icon}</div>
+      <h3 className="impact-metric">{value}</h3>
+      <p className="impact-label">{label}</p>
+    </motion.div>
+  );
+};
 
 const CaseStudyDetail = () => {
   const { id } = useParams();
@@ -35,14 +52,19 @@ const CaseStudyDetail = () => {
         <section className="case-study-hero" style={{ backgroundImage: `url(${project.image})` }}>
           <div className="hero-overlay"></div>
           <div className="container relative z-10">
-            <Link to="/" className="back-link animate-fade-down">
+            <Link to="/" className="back-link">
               <ArrowLeft size={20} /> Back to Portfolio
             </Link>
-            <div className="hero-content animate-fade-up">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="hero-content"
+            >
               <span className="case-study-category-badge">{project.category}</span>
               <h1 className="hero-title">{project.title}</h1>
               <p className="hero-subtitle">{project.description}</p>
-            </div>
+            </motion.div>
           </div>
         </section>
         <section className="section">
@@ -59,33 +81,56 @@ const CaseStudyDetail = () => {
 
   const { details } = project;
 
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
   return (
     <div className="case-study-detail-page dark-mode-support">
       
       {/* 1. Hero Section */}
       <section className="cs-hero">
         <div className="container cs-hero-container">
-          <Link to="/" className="back-link animate-fade-down">
-            <ArrowLeft size={20} /> Back
-          </Link>
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+            <Link to="/" className="back-link">
+              <ArrowLeft size={20} /> Back
+            </Link>
+          </motion.div>
           
           <div className="cs-hero-grid">
-            <div className="cs-hero-content animate-fade-up">
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+              className="cs-hero-content"
+            >
               <span className="cs-category">{details.projectType}</span>
               <h1 className="cs-title">{project.title}</h1>
               <p className="cs-subtitle">{project.description}</p>
               
               <div className="cs-metrics">
                 {details.metrics.map((metric, idx) => (
-                  <div key={idx} className="cs-metric-pill">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + idx * 0.1 }}
+                    key={idx} 
+                    className="cs-metric-pill"
+                  >
                     <CheckCircle size={16} className="text-primary" />
                     <span>{metric}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
             
-            <div className="cs-hero-meta animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.2, duration: 0.6 } } }}
+              className="cs-hero-meta"
+            >
               <div className="meta-item">
                 <span className="meta-label">Role</span>
                 <span className="meta-value">{details.role}</span>
@@ -104,57 +149,85 @@ const CaseStudyDetail = () => {
                   <span className="meta-value" style={{ whiteSpace: 'pre-line' }}>{details.team}</span>
                 </div>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        <div className="cs-banner-wrapper animate-fade-up" style={{ animationDelay: '0.2s' }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="cs-banner-wrapper"
+        >
           <img src={project.bannerImage} alt="Project Banner" className="cs-banner-image" />
-          <div className="cs-device-mockup glass">
+          <motion.div 
+            whileHover={{ y: -5 }}
+            className="cs-device-mockup glass"
+          >
             <img src={project.image} alt="App Mockup" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* 2. Project Overview */}
       <section className="cs-section bg-secondary">
         <div className="container cs-overview-grid">
-          <div className="cs-overview-card animate-fade-up">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInUp}
+            className="cs-overview-card"
+          >
             <div className="icon-wrapper glass-icon"><Target size={28} /></div>
             <h2>The Problem</h2>
             <p>{details.overview.problem}</p>
-          </div>
-          <div className="cs-overview-card animate-fade-up" style={{ animationDelay: '0.1s' }}>
+          </motion.div>
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: 0.1, duration: 0.6 } } }}
+            className="cs-overview-card"
+          >
             <div className="icon-wrapper glass-icon"><Layout size={28} /></div>
             <h2>The Goal</h2>
             <p>{details.overview.goal}</p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* 3. Research Section */}
       <section className="cs-section">
         <div className="container">
-          <h2 className="section-title">User Research</h2>
+          <motion.h2 
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
+            className="section-title"
+          >User Research</motion.h2>
           <div className="cs-research-grid">
-            <div className="cs-research-card glass animate-fade-up">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="cs-research-card glass">
               <Users size={24} className="text-primary mb-4" />
               <h3>Interviews</h3>
               <p>{details.research.interviews}</p>
-            </div>
-            <div className="cs-research-card glass animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="cs-research-card glass">
               <Search size={24} className="text-primary mb-4" />
               <h3>Observations</h3>
               <p>{details.research.observations}</p>
-            </div>
-            <div className="cs-research-card glass animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="cs-research-card glass">
               <ShieldCheck size={24} className="text-primary mb-4" />
               <h3>Stakeholders</h3>
               <p>{details.research.stakeholders}</p>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="cs-findings-container glass animate-fade-up">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="cs-findings-container glass"
+          >
             <h3>Key Findings</h3>
             <div className="cs-findings-list">
               {details.research.keyFindings.map((finding, idx) => (
@@ -164,25 +237,37 @@ const CaseStudyDetail = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* 4. User Flow Section */}
       <section className="cs-section bg-secondary">
         <div className="container">
-          <h2 className="section-title">User Flow</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">User Flow</motion.h2>
           <div className="cs-flow-container overflow-x-auto pb-4">
             <div className="cs-flowchart">
               {['Login', 'Dashboard', 'Patient List', 'Patient Details', 'Report Review', 'Submit Report'].map((step, idx, arr) => (
                 <React.Fragment key={idx}>
-                  <div className="flow-step glass">
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flow-step glass"
+                  >
                     <span>{step}</span>
-                  </div>
+                  </motion.div>
                   {idx < arr.length - 1 && (
-                    <div className="flow-arrow">
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 + 0.05 }}
+                      className="flow-arrow"
+                    >
                       <ChevronRight size={24} className="text-primary" />
-                    </div>
+                    </motion.div>
                   )}
                 </React.Fragment>
               ))}
@@ -194,20 +279,31 @@ const CaseStudyDetail = () => {
       {/* 5. Wireframe Section */}
       <section className="cs-section">
         <div className="container">
-          <h2 className="section-title">Wireframes</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">Wireframes</motion.h2>
           <div className="cs-wireframes-grid">
-            <div className="wireframe-card animate-fade-up">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="wireframe-card"
+            >
               <div className="wireframe-img-wrapper">
-                <img src={details.wireframes.lofi} alt="Low Fidelity Wireframes" loading="lazy" />
+                <motion.img whileHover={{ scale: 1.05 }} src={details.wireframes.lofi} alt="Low Fidelity Wireframes" loading="lazy" />
               </div>
               <div className="wireframe-caption">Low-fidelity wireframes</div>
-            </div>
-            <div className="wireframe-card animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="wireframe-card"
+            >
               <div className="wireframe-img-wrapper">
-                <img src={details.wireframes.midfi} alt="Mid Fidelity Wireframes" loading="lazy" />
+                <motion.img whileHover={{ scale: 1.05 }} src={details.wireframes.midfi} alt="Mid Fidelity Wireframes" loading="lazy" />
               </div>
               <div className="wireframe-caption">Mid-fidelity wireframes</div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -215,10 +311,10 @@ const CaseStudyDetail = () => {
       {/* 6. Design Exploration */}
       <section className="cs-section bg-secondary cs-design-system">
         <div className="container">
-          <h2 className="section-title">Design Exploration</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">Design Exploration</motion.h2>
           <div className="cs-ds-grid">
             
-            <div className="ds-card glass animate-fade-up">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="ds-card glass">
               <h3>Typography</h3>
               <div className="typography-showcase">
                 <div className="type-row">
@@ -231,31 +327,31 @@ const CaseStudyDetail = () => {
                 <h1 className="demo-h1">Heading 1</h1>
                 <p className="demo-p">Body text representing the patient information and reporting details.</p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="ds-card glass animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="ds-card glass">
               <h3>Color Palette</h3>
               <div className="color-palette">
                 {details.designExploration.colors.map((color, idx) => (
-                  <div key={idx} className="color-swatch-wrapper">
+                  <motion.div whileHover={{ scale: 1.05 }} key={idx} className="color-swatch-wrapper">
                     <div className="color-swatch" style={{ backgroundColor: color }}></div>
                     <span className="color-hex">{color}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="ds-card glass animate-fade-up cs-components-demo" style={{ animationDelay: '0.2s' }}>
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="ds-card glass cs-components-demo">
               <h3>Components</h3>
               <div className="components-preview">
-                <button className="btn btn-primary mb-4 w-full">Primary Button</button>
+                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="btn btn-primary mb-4 w-full">Primary Button</motion.button>
                 <div className="demo-input glass">Patient Name</div>
                 <div className="demo-toggle">
                   <span>Push Notifications</span>
-                  <div className="toggle-switch active"></div>
+                  <motion.div layout className="toggle-switch active"></motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -264,18 +360,25 @@ const CaseStudyDetail = () => {
       {/* 7. Final UI Screens */}
       <section className="cs-section cs-final-ui">
         <div className="container">
-          <h2 className="section-title">Final UI Screens</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">Final UI Screens</motion.h2>
           <div className="ui-gallery-grid">
             {details.finalScreens.map((screen, idx) => (
-              <div key={idx} className="ui-screen-card animate-fade-up" style={{ animationDelay: `${(idx % 3) * 0.1}s` }}>
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: (idx % 3) * 0.1 }}
+                key={idx} 
+                className="ui-screen-card"
+              >
                 <div className="ui-image-wrapper">
-                  <img src={screen.image} alt={screen.name} loading="lazy" />
+                  <motion.img whileHover={{ scale: 1.03 }} src={screen.image} alt={screen.name} loading="lazy" />
                   <div className="ui-hover-overlay">
                     <ImageIcon size={32} />
                   </div>
                 </div>
                 <h4>{screen.name}</h4>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -284,10 +387,17 @@ const CaseStudyDetail = () => {
       {/* 8. Key Design Decisions */}
       <section className="cs-section bg-secondary">
         <div className="container">
-          <h2 className="section-title">Key Design Decisions</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">Key Design Decisions</motion.h2>
           <div className="cs-decisions-grid">
             {details.keyDecisions.map((decision, idx) => (
-              <div key={idx} className="decision-card glass animate-fade-up" style={{ animationDelay: `${idx * 0.1}s` }}>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                key={idx} 
+                className="decision-card glass"
+              >
                 <div className="decision-icon">
                   {idx === 0 && <LayoutDashboard size={24} />}
                   {idx === 1 && <Settings size={24} />}
@@ -296,7 +406,7 @@ const CaseStudyDetail = () => {
                 </div>
                 <h3>{decision.title}</h3>
                 <p>{decision.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -305,10 +415,16 @@ const CaseStudyDetail = () => {
       {/* 9. Challenges & Solutions */}
       <section className="cs-section">
         <div className="container">
-          <h2 className="section-title">Challenges & Solutions</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">Challenges & Solutions</motion.h2>
           <div className="cs-challenges-list">
             {details.challengesSolutions.map((item, idx) => (
-              <div key={idx} className="challenge-solution-row glass animate-fade-up">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                key={idx} 
+                className="challenge-solution-row glass"
+              >
                 <div className="challenge-col">
                   <span className="cs-label text-error">Challenge</span>
                   <p>{item.challenge}</p>
@@ -321,7 +437,7 @@ const CaseStudyDetail = () => {
                   <span className="cs-label text-success">Solution</span>
                   <p>{item.solution}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -330,20 +446,24 @@ const CaseStudyDetail = () => {
       {/* 10. Outcome & Impact */}
       <section className="cs-section bg-secondary">
         <div className="container">
-          <h2 className="section-title">Outcome & Impact</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="section-title">Outcome & Impact</motion.h2>
           <div className="cs-metrics-grid">
-            {details.outcomes.map((outcome, idx) => (
-              <div key={idx} className="impact-card glass animate-fade-up" style={{ animationDelay: `${idx * 0.1}s` }}>
-                <div className="impact-icon">
-                  {idx === 0 && <Clock size={28} className="text-primary" />}
-                  {idx === 1 && <ThumbsUp size={28} className="text-primary" />}
-                  {idx === 2 && <Zap size={28} className="text-primary" />}
-                  {idx === 3 && <Users size={28} className="text-primary" />}
-                </div>
-                <h3 className="impact-metric">{outcome.metric}</h3>
-                <p className="impact-label">{outcome.label}</p>
-              </div>
-            ))}
+            {details.outcomes.map((outcome, idx) => {
+              const icons = [
+                <Clock size={28} className="text-primary" />,
+                <ThumbsUp size={28} className="text-primary" />,
+                <Zap size={28} className="text-primary" />,
+                <Users size={28} className="text-primary" />
+              ];
+              return (
+                <StatCounter 
+                  key={idx} 
+                  value={outcome.metric} 
+                  label={outcome.label} 
+                  icon={icons[idx % icons.length]} 
+                />
+              );
+            })}
           </div>
         </div>
       </section>
@@ -351,17 +471,28 @@ const CaseStudyDetail = () => {
       {/* 11. Lessons Learned */}
       <section className="cs-section">
         <div className="container cs-lessons-container">
-          <div className="cs-lessons-card glass animate-fade-up">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="cs-lessons-card glass"
+          >
             <h2>Lessons Learned</h2>
             <ul className="lessons-list">
               {details.lessonsLearned.map((lesson, idx) => (
-                <li key={idx}>
+                <motion.li 
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  key={idx}
+                >
                   <CheckCircle size={20} className="text-primary flex-shrink-0" />
                   <span>{lesson}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -382,15 +513,21 @@ const CaseStudyDetail = () => {
       {/* 13. Contact Section */}
       <section className="cs-contact bg-secondary text-center">
         <div className="container">
-          <h2 className="animate-fade-up">Interested in working together?</h2>
-          <div className="contact-buttons animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            <a href="mailto:hello@example.com" className="btn btn-primary btn-large">
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>Interested in working together?</motion.h2>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="contact-buttons"
+          >
+            <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="mailto:hello@example.com" className="btn btn-primary btn-large">
               <Mail size={20} className="mr-2" /> Contact Me
-            </a>
-            <Link to="/" className="btn btn-secondary btn-large">
+            </motion.a>
+            <motion.Link whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} to="/" className="btn btn-secondary btn-large">
               View More Projects <ExternalLink size={20} className="ml-2" />
-            </Link>
-          </div>
+            </motion.Link>
+          </motion.div>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
 import { LinkedinIcon, BehanceIcon, MailIcon } from './Icons';
 import { useTranslation } from '../context/LanguageContext';
@@ -6,44 +7,96 @@ import './Hero.css';
 
 const Hero = () => {
   const { t } = useTranslation();
+  const prefersReducedMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const ctaVariants = {
+    hidden: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.95 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut", delay: 0.6 }
+    }
+  };
+
   return (
     <section className="hero" id="home">
       <div className="hero-background">
-        <div className="glow glow-1"></div>
-        <div className="glow glow-2"></div>
+        <motion.div 
+          className="glow glow-1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+        ></motion.div>
+        <motion.div 
+          className="glow glow-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 0.5 }}
+        ></motion.div>
       </div>
 
-      <div className="container hero-container animate-fade-up">
-        <div className="hero-content">
-          <span className="hero-greeting text-gradient">{t('hero.greeting')}</span>
-          <h1 className="hero-name">{t('hero.name')}</h1>
-          <h2 className="hero-role">{t('hero.role')}</h2>
+      <div className="container hero-container">
+        <motion.div 
+          className="hero-content"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.span variants={itemVariants} className="hero-greeting text-gradient">
+            {t('hero.greeting')}
+          </motion.span>
+          <motion.h1 variants={itemVariants} className="hero-name">
+            {t('hero.name')}
+          </motion.h1>
+          <motion.h2 variants={itemVariants} className="hero-role">
+            {t('hero.role')}
+          </motion.h2>
 
-          <p className="hero-tagline">
+          <motion.p variants={itemVariants} className="hero-tagline">
             {t('hero.tagline')}
-          </p>
+          </motion.p>
 
-          <div className="hero-ctas">
-            <a href="#work" className="btn btn-primary">
+          <motion.div variants={ctaVariants} initial="hidden" animate="visible" className="hero-ctas">
+            <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#work" className="btn btn-primary">
               {t('hero.viewProjects')} <ArrowRight size={18} className="ml-2" />
-            </a>
-            <a href="/resume.pdf" className="btn btn-secondary">
+            </motion.a>
+            <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="/resume.pdf" className="btn btn-secondary">
               {t('hero.downloadResume')} <Download size={18} className="ml-2" />
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
 
-          <div className="hero-socials">
-            <a href="https://www.linkedin.com/in/varunsuryavemula" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="social-link">
+          <motion.div variants={itemVariants} className="hero-socials">
+            <motion.a whileHover={{ y: -3 }} href="https://www.linkedin.com/in/varunsuryavemula" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="social-link">
               <LinkedinIcon size={20} /> LinkedIn
-            </a>
-            <a href="https://www.behance.net/varunsurya1" target="_blank" rel="noreferrer" aria-label="Behance" className="social-link">
+            </motion.a>
+            <motion.a whileHover={{ y: -3 }} href="https://www.behance.net/varunsurya1" target="_blank" rel="noreferrer" aria-label="Behance" className="social-link">
               <BehanceIcon size={20} /> Behance
-            </a>
-            <a href="mailto:hello@example.com" aria-label="Email" className="social-link">
+            </motion.a>
+            <motion.a whileHover={{ y: -3 }} href="mailto:hello@example.com" aria-label="Email" className="social-link">
               <MailIcon size={20} /> Email
-            </a>
-          </div>
-        </div>
+            </motion.a>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

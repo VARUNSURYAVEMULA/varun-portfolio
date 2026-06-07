@@ -373,19 +373,42 @@ export const caseStudies = [
   }
 ];
 
+import { motion } from 'framer-motion';
+
 const CaseStudies = () => {
   return (
     <section id="work" className="case-studies-section">
       <div className="container">
-        <h2 className="section-title">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="section-title"
+        >
           Featured <span className="text-gradient">Case Studies</span>
-        </h2>
+        </motion.h2>
 
         <div className="case-studies-grid">
           {caseStudies.map((project, idx) => (
-            <div key={project.id} className="case-study-card glass animate-fade-up" style={{ animationDelay: `${(idx % 3) * 0.1}s` }}>
-              <div className="case-study-image-wrapper">
-                <img src={project.image} alt={project.title} className="case-study-image" loading="lazy" />
+            <motion.div 
+              key={project.id} 
+              className="case-study-card glass"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: (idx % 3) * 0.15 }}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+            >
+              <div className="case-study-image-wrapper" style={{ overflow: 'hidden' }}>
+                <motion.img 
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
+                  src={project.image} 
+                  alt={project.title} 
+                  className="case-study-image" 
+                  loading="lazy" 
+                />
                 <div className="case-study-overlay">
                   <button className="btn btn-primary">View Project</button>
                 </div>
@@ -403,7 +426,7 @@ const CaseStudies = () => {
                   Read Case Study <ArrowRight size={16} className="ml-2" />
                 </Link>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
