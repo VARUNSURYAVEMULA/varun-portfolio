@@ -2,11 +2,9 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Download } from 'lucide-react';
 import { LinkedinIcon, BehanceIcon, MailIcon } from './Icons';
-import { useTranslation } from '../context/LanguageContext';
 import './Hero.css';
 
 const Hero = () => {
-  const { t } = useTranslation();
   const prefersReducedMotion = useReducedMotion();
 
   const containerVariants = {
@@ -22,8 +20,8 @@ const Hero = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
     }
@@ -31,8 +29,8 @@ const Hero = () => {
 
   const ctaVariants = {
     hidden: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.95 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
       transition: { duration: 0.5, ease: "easeOut", delay: 0.6 }
     }
@@ -41,13 +39,13 @@ const Hero = () => {
   return (
     <section className="hero" id="home">
       <div className="hero-background">
-        <motion.div 
+        <motion.div
           className="glow glow-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
         ></motion.div>
-        <motion.div 
+        <motion.div
           className="glow glow-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -56,32 +54,32 @@ const Hero = () => {
       </div>
 
       <div className="container hero-container">
-        <motion.div 
+        <motion.div
           className="hero-content"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <motion.span variants={itemVariants} className="hero-greeting text-gradient">
-            {t('hero.greeting')}
+            Hello, I'm
           </motion.span>
           <motion.h1 variants={itemVariants} className="hero-name">
-            {t('hero.name')}
+            Varun Surya Vemula
           </motion.h1>
           <motion.h2 variants={itemVariants} className="hero-role">
-            {t('hero.role')}
+            UI/UX Designer
           </motion.h2>
 
           <motion.p variants={itemVariants} className="hero-tagline">
-            {t('hero.tagline')}
+            Crafting intuitive, accessible, and beautiful digital experiences.
           </motion.p>
 
           <motion.div variants={ctaVariants} initial="hidden" animate="visible" className="hero-ctas">
             <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#work" className="btn btn-primary">
-              {t('hero.viewProjects')} <ArrowRight size={18} className="ml-2" />
+              View My Work <ArrowRight size={18} className="ml-2" />
             </motion.a>
             <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="/resume.pdf" className="btn btn-secondary">
-              {t('hero.downloadResume')} <Download size={18} className="ml-2" />
+              Download Resume <Download size={18} className="ml-2" />
             </motion.a>
           </motion.div>
 

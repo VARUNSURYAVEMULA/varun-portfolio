@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LanguageSwitcher from './LanguageSwitcher';
-import { useTranslation } from '../context/LanguageContext';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -10,8 +8,6 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [hoveredLink, setHoveredLink] = useState(null);
-  const { t } = useTranslation();
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -30,11 +26,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: t('nav.about'), href: '#about' },
-    { name: t('nav.experience'), href: '#experience' },
-    { name: t('nav.work'), href: '#work' },
-    { name: t('nav.process'), href: '#process' },
-    { name: t('nav.contact'), href: '#contact' },
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Work', href: '#work' },
+    { name: 'Process', href: '#process' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -78,7 +74,7 @@ const Navbar = () => {
               )}
             </a>
           ))}
-          <LanguageSwitcher />
+
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -92,7 +88,7 @@ const Navbar = () => {
 
         <div className="nav-mobile-toggle">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginRight: '1rem' }}>
-            <LanguageSwitcher />
+
             <motion.button 
               whileTap={{ scale: 0.9 }}
               onClick={toggleTheme} 

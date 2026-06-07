@@ -115,7 +115,7 @@ const IconHideImages = () => (
 const AccessibilityPanel = () => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
-  const { preferences, updatePreference, changeFontSize } = useAccessibility();
+  const { preferences, updatePreference, changeFontSize, resetPreferences } = useAccessibility();
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -163,9 +163,19 @@ const AccessibilityPanel = () => {
           >
             <div className="a11y-panel-header">
               <h2 id="a11y-panel-title">Accessibility Options</h2>
-              <button className="a11y-close-btn" onClick={() => setIsOpen(false)} aria-label="Close">
-                <CloseIcon />
-              </button>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button 
+                  className="a11y-reset-btn" 
+                  onClick={resetPreferences} 
+                  aria-label="Reset Settings"
+                  style={{ fontSize: '0.85rem', padding: '4px 10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '4px', cursor: 'pointer', color: 'var(--text-primary)', transition: 'background 0.2s' }}
+                >
+                  Reset
+                </button>
+                <button className="a11y-close-btn" onClick={() => setIsOpen(false)} aria-label="Close">
+                  <CloseIcon />
+                </button>
+              </div>
             </div>
 
             <div className="a11y-panel-grid">
