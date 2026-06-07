@@ -1,0 +1,66 @@
+.about-section {
+  position: relative;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.about-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.feature-card {
+  grid-column: 1 / -1;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.card-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.expertise-list {
+  padding-left: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.expertise-list li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  list-style-type: disc;
+}
+
+.expertise-list li::marker {
+  color: var(--primary-color);
+}
+
+@media (max-width: 992px) {
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}

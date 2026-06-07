@@ -1,0 +1,142 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 5rem;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+}
+
+.glow-1 {
+  background: var(--primary-color);
+  width: 600px;
+  height: 600px;
+  top: -100px;
+  left: -200px;
+}
+
+.glow-2 {
+  background: var(--accent-color);
+  width: 500px;
+  height: 500px;
+  bottom: -100px;
+  right: -100px;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+
+.hero-greeting {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.hero-name {
+  font-size: 4.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.hero-role {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.hero-tagline {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: 3rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.hero-socials {
+  display: flex;
+  gap: 2rem;
+}
+
+.social-link {
+  font-weight: 500;
+  color: var(--text-secondary);
+  position: relative;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.social-link:hover {
+  color: var(--text-primary);
+}
+
+.social-link:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hero-name {
+    font-size: 3rem;
+  }
+  .hero-role {
+    font-size: 1.5rem;
+  }
+  .hero-ctas {
+    flex-direction: column;
+  }
+  .hero-socials {
+    gap: 1.5rem;
+  }
+}

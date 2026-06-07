@@ -1,0 +1,125 @@
+/* Accessibility Overrides */
+
+/* --- VISION --- */
+
+/* Font Size */
+html[data-a11y-font-size="-2"] { font-size: 80% !important; }
+html[data-a11y-font-size="-1"] { font-size: 90% !important; }
+html[data-a11y-font-size="1"] { font-size: 110% !important; }
+html[data-a11y-font-size="2"] { font-size: 120% !important; }
+html[data-a11y-font-size="3"] { font-size: 130% !important; }
+
+/* Text Spacing */
+html[data-a11y-text-spacing="true"] * {
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+
+/* Line Height */
+html[data-a11y-line-height="true"] * {
+  line-height: 2 !important;
+}
+
+/* Dyslexia Friendly Font */
+html[data-a11y-dyslexia-friendly="true"] * {
+  font-family: "Comic Sans MS", "Trebuchet MS", "OpenDyslexic", sans-serif !important;
+}
+
+/* Saturation / Grayscale */
+html[data-a11y-saturation="true"] {
+  filter: grayscale(100%) !important;
+}
+
+/* Light-Dark / High Contrast */
+html[data-a11y-light-dark="true"] {
+  --bg-color: #000000 !important;
+  --bg-color-rgb: 0, 0, 0 !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #ffeb3b !important;
+  --primary-color: #ffeb3b !important;
+  --accent-color: #ffffff !important;
+  --glass-bg: rgba(0, 0, 0, 0.9) !important;
+  --glass-border: rgba(255, 255, 255, 0.5) !important;
+}
+html[data-a11y-light-dark="true"] * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Invert Colors */
+html[data-a11y-invert-colors="true"] {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+html[data-a11y-invert-colors="true"] img,
+html[data-a11y-invert-colors="true"] video {
+  filter: invert(100%) hue-rotate(180deg) !important; /* Re-invert media back to normal */
+}
+
+/* Highlight Links */
+html[data-a11y-highlight-links="true"] a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-underline-offset: 4px;
+  background-color: rgba(255, 235, 59, 0.3) !important;
+}
+
+/* Cursor */
+html[data-a11y-big-cursor="true"],
+html[data-a11y-big-cursor="true"] * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M7 2l12 11.2h-5.8l3.3 7.3-2.2.9-3.2-7.4-4.4 4.7z" fill="black" stroke="white" stroke-width="1.5"/></svg>'), auto !important;
+}
+
+/* Pause Animation / Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-a11y-pause-animation="true"] *,
+html[data-a11y-pause-animation="true"] *::before,
+html[data-a11y-pause-animation="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+  transform: none !important;
+}
+html[data-a11y-pause-animation="true"] .glow {
+  display: none !important;
+}
+
+/* Hide Images */
+html[data-a11y-hide-images="true"] img,
+html[data-a11y-hide-images="true"] svg:not(.a11y-grid-icon svg):not(.a11y-floating-btn svg):not(.a11y-close-btn svg) {
+  visibility: hidden !important;
+}
+html[data-a11y-hide-images="true"] [style*="background-image"] {
+  background-image: none !important;
+}
+
+/* Keyboard Focus Indicators */
+*:focus-visible {
+  outline: 3px solid var(--primary-color) !important;
+  outline-offset: 3px !important;
+}
+
+/* Skip to Content Button */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}

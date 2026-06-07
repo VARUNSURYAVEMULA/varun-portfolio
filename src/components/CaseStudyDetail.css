@@ -1,0 +1,852 @@
+/* Case Study Detail Global & Utilities */
+.case-study-detail-page {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.cs-section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.glass-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+/* 1. Hero Section */
+.cs-hero {
+  padding-top: 120px;
+  padding-bottom: 4rem;
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.cs-hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 3rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+  transform: translateX(-4px);
+}
+
+.cs-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 992px) {
+  .cs-hero-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.cs-category {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--gradient-accent);
+  color: white;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.cs-title {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.cs-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.cs-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cs-metric-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.cs-hero-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 2.5rem;
+  border-radius: 24px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.meta-value {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Hero Banner & Mockup */
+.cs-banner-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.cs-banner-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-device-mockup {
+  position: absolute;
+  bottom: -40px;
+  right: 10%;
+  width: 300px;
+  height: 600px;
+  border-radius: 40px;
+  padding: 12px;
+  background: var(--glass-bg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: none;
+}
+
+.cs-device-mockup img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
+}
+
+@media (min-width: 992px) {
+  .cs-device-mockup {
+    display: block;
+  }
+}
+
+/* 2. Project Overview */
+.cs-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .cs-overview-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cs-overview-card {
+  padding: 3rem;
+  background: var(--bg-primary);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease;
+}
+
+.cs-overview-card:hover {
+  transform: translateY(-5px);
+}
+
+.cs-overview-card h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.cs-overview-card p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* 3. Research Section */
+.cs-research-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .cs-research-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cs-research-card {
+  padding: 2.5rem;
+  border-radius: 20px;
+}
+
+.cs-research-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cs-research-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.cs-findings-container {
+  padding: 3rem;
+  border-radius: 24px;
+}
+
+.cs-findings-container h3 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.cs-findings-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .cs-findings-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.finding-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-primary);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.finding-number {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  opacity: 0.5;
+}
+
+.finding-item p {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* 4. User Flow */
+.cs-flow-container {
+  padding-bottom: 2rem;
+}
+
+.cs-flowchart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 800px;
+  padding: 2rem;
+  background: var(--bg-primary);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.flow-step {
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.flow-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 5. Wireframes */
+.cs-wireframes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .cs-wireframes-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.wireframe-card {
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.wireframe-img-wrapper {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.wireframe-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.wireframe-card:hover .wireframe-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.wireframe-caption {
+  padding: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* 6. Design Exploration */
+.cs-ds-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 992px) {
+  .cs-ds-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.ds-card {
+  padding: 2.5rem;
+  border-radius: 24px;
+}
+
+.ds-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.type-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.type-label {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.type-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.type-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.type-weights {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.demo-h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.demo-p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.color-palette {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.color-swatch-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.color-swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.color-hex {
+  font-size: 0.875rem;
+  font-family: monospace;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.components-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-input {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  color: var(--text-secondary);
+}
+
+.demo-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.toggle-switch {
+  width: 48px;
+  height: 24px;
+  background: var(--border-color);
+  border-radius: 12px;
+  position: relative;
+}
+
+.toggle-switch.active {
+  background: var(--primary-color);
+}
+
+.toggle-switch.active::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+}
+
+/* 7. Final UI Screens */
+.ui-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  .ui-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ui-gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ui-screen-card {
+  text-align: center;
+}
+
+.ui-image-wrapper {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 9/16;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.ui-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.ui-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ui-image-wrapper:hover img {
+  transform: scale(1.05);
+}
+
+.ui-image-wrapper:hover .ui-hover-overlay {
+  opacity: 1;
+}
+
+.ui-screen-card h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* 8. Key Design Decisions */
+.cs-decisions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .cs-decisions-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.decision-card {
+  padding: 2.5rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.decision-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--gradient-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.decision-card h3 {
+  font-size: 1.5rem;
+}
+
+.decision-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* 9. Challenges & Solutions */
+.cs-challenges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.challenge-solution-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 3rem;
+  border-radius: 24px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .challenge-solution-row {
+    grid-template-columns: 1fr auto 1fr;
+  }
+}
+
+.cs-label {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.text-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.text-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.challenge-col p, .solution-col p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.arrow-col {
+  display: flex;
+  justify-content: center;
+}
+
+.hidden-mobile { display: none; }
+.hidden-desktop { display: block; }
+
+@media (min-width: 768px) {
+  .hidden-mobile { display: block; }
+  .hidden-desktop { display: none; }
+}
+
+/* 10. Outcome & Impact */
+.cs-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 992px) {
+  .cs-metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.impact-card {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  border-radius: 24px;
+}
+
+.impact-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  background: var(--bg-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.impact-metric {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.impact-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 11. Lessons Learned */
+.cs-lessons-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cs-lessons-card {
+  padding: 4rem;
+  border-radius: 32px;
+}
+
+.cs-lessons-card h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.lessons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.lessons-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* 12. Next Project Nav */
+.border-top {
+  border-top: 1px solid var(--border-color);
+}
+
+.cs-project-nav {
+  padding: 4rem 0;
+  background: var(--bg-primary);
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .nav-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.nav-card {
+  padding: 3rem;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+  text-decoration: none;
+}
+
+.nav-card:hover {
+  transform: translateY(-5px);
+  background: var(--bg-secondary);
+}
+
+.prev-card {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.next-card {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.nav-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.nav-card h3 {
+  font-size: 2rem;
+  color: var(--text-primary);
+}
+
+/* 13. Contact Section */
+.cs-contact {
+  padding: 8rem 0;
+}
+
+.cs-contact h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 3rem;
+}
+
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.btn-large {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+}
+
+/* Utilities */
+.text-primary {
+  color: var(--primary-color);
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+.overflow-x-auto::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
