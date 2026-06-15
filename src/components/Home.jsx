@@ -12,12 +12,12 @@ const Home = () => {
   return (
     <>
       <Hero />
+      <CaseStudies />
       <About />
       <DesignProcess />
       <Skills />
       <Timeline />
       <HealthcareSpecialization />
-      <CaseStudies />
       <Contact />
     </>
   );

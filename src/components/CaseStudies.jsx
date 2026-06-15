@@ -5,153 +5,6 @@ import './CaseStudies.css';
 
 export const caseStudies = [
   {
-    id: 1,
-    title: 'Radiologist Mobile App',
-    category: 'Healthcare UI',
-    description: 'A comprehensive application streamlining radiologist workflows, improving diagnosis speed, and enhancing patient data visualization.',
-    tags: ['Healthcare', 'Mobile App', 'Wireframes'],
-    image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5eb3?auto=format&fit=crop&q=80&w=800',
-    bannerImage: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1600',
-    details: {
-      projectType: 'Healthcare Mobile Application',
-      role: 'UI/UX Designer',
-      duration: '3 Months',
-      tools: 'Figma, Photoshop, Illustrator',
-      metrics: [
-        'Healthcare Platform',
-        'Mobile Application',
-        'User-Centered Design',
-        'End-to-End UX Process'
-      ],
-      overview: {
-        problem: 'Radiologists spend significant time navigating complex systems, leading to inefficiencies and increased cognitive load.',
-        goal: 'Design an intuitive mobile experience that enables radiologists to review reports, manage tasks, and access patient information efficiently.'
-      },
-      research: {
-        interviews: 'Conducted in-depth interviews with radiologists to understand their daily workflows and pain points.',
-        observations: 'Shadowed radiologists during their shifts to observe their interactions with existing systems in real-time.',
-        stakeholders: 'Regular discussions with hospital administrators and IT staff to align on technical constraints and security requirements.',
-        keyFindings: [
-          'Too many clicks',
-          'Poor navigation',
-          'Difficult report access',
-          'Information overload'
-        ]
-      },
-      wireframes: {
-        lofi: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&q=80&w=800',
-        midfi: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80&w=800',
-      },
-      designExploration: {
-        typography: { primary: 'Inter', secondary: 'Inter' },
-        colors: ['#0ea5e9', '#0f172a', '#f8fafc', '#10b981'],
-      },
-      finalScreens: [
-        { name: 'Dashboard', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Patient List', image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5eb3?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Patient Details', image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Report Review', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Notifications', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Profile', image: 'https://images.unsplash.com/photo-1544256718-3b61023b49e3?auto=format&fit=crop&q=80&w=600' }
-      ],
-      keyDecisions: [
-        { title: 'Simplified Navigation', desc: 'Reduced navigation complexity.' },
-        { title: 'Improved Readability', desc: 'Enhanced typography and hierarchy.' },
-        { title: 'Faster Workflows', desc: 'Reduced steps required to complete tasks.' },
-        { title: 'Better Accessibility', desc: 'Improved touch targets and contrast.' }
-      ],
-      challengesSolutions: [
-        { challenge: 'Managing large amounts of medical information', solution: 'Introduced progressive disclosure and collapsible sections.' }
-      ],
-      outcomes: [
-        { metric: 'Reduced', label: 'Task completion time' },
-        { metric: 'Improved', label: 'Usability' },
-        { metric: 'Increased', label: 'Efficiency' },
-        { metric: 'Better', label: 'User satisfaction' }
-      ],
-      lessonsLearned: [
-        'User research importance',
-        'Healthcare UX considerations',
-        'Accessibility improvements',
-        'Design system consistency'
-      ]
-    }
-  },
-  {
-    id: 2,
-    title: 'Employee Tracker',
-    category: 'Enterprise SaaS',
-    description: 'An intuitive dashboard for tracking employee performance, attendance, and project allocation in hospital environments.',
-    tags: ['Dashboard', 'Web App', 'Prototyping'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
-    bannerImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1600',
-    details: {
-      projectType: 'Enterprise Dashboard Design',
-      role: 'Lead UX Designer',
-      duration: '4 Months',
-      tools: 'Figma, Miro, React',
-      team: '1 UX Designer\n3 Engineers',
-      metrics: [
-        'B2B SaaS',
-        'Data Visualization',
-        'User Management',
-        'Productivity'
-      ],
-      overview: {
-        problem: 'Hospital HR and administration were relying on fragmented spreadsheets to track shift allocations and performance, leading to staffing shortages and burnout.',
-        goal: 'Consolidate employee tracking into a centralized, easy-to-read dashboard that provides actionable insights to management.'
-      },
-      research: {
-        interviews: 'Interviewed HR managers and department heads to map their current workflows and pain points.',
-        observations: 'Analyzed existing spreadsheet structures to identify critical data points and redundancies.',
-        stakeholders: 'Collaborated with compliance officers to ensure HIPAA compliance for employee health records.',
-        keyFindings: [
-          'Fragmented data sources',
-          'Lack of real-time visibility',
-          'Cumbersome reporting',
-          'High learning curve'
-        ]
-      },
-      wireframes: {
-        lofi: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&q=80&w=800',
-        midfi: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80&w=800',
-      },
-      designExploration: {
-        typography: { primary: 'Roboto', secondary: 'Inter' },
-        colors: ['#3b82f6', '#1e293b', '#f1f5f9', '#f59e0b'],
-      },
-      finalScreens: [
-        { name: 'Main Dashboard', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Employee Roster', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Shift Scheduling', image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Performance Metrics', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Leave Management', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Reports Generation', image: 'https://images.unsplash.com/photo-1544256718-3b61023b49e3?auto=format&fit=crop&q=80&w=600' }
-      ],
-      keyDecisions: [
-        { title: 'Data Visualization', desc: 'Used clear charts to present complex shift data.' },
-        { title: 'Bulk Actions', desc: 'Implemented multi-select for faster shift assignments.' },
-        { title: 'Predictive Alerts', desc: 'Added warnings for potential staffing shortages.' },
-        { title: 'Customizable Views', desc: 'Allowed users to save custom dashboard layouts.' }
-      ],
-      challengesSolutions: [
-        { challenge: 'Visualizing overlapping shift schedules clearly', solution: 'Designed a Gantt-style timeline view with color-coded shift types.' }
-      ],
-      outcomes: [
-        { metric: '50%', label: 'Reduction in scheduling conflicts' },
-        { metric: '20hrs', label: 'Saved per week on reporting' },
-        { metric: '90%', label: 'Adoption rate' },
-        { metric: '3x', label: 'Faster shift allocation' }
-      ],
-      lessonsLearned: [
-        'Data density requires careful typographical hierarchy',
-        'Enterprise users value efficiency over flashy aesthetics',
-        'Bulk actions are essential for power users',
-        'Continuous feedback loops improve data viz'
-      ]
-    }
-  },
-  {
     id: 3,
     title: 'Blood Donation App - Life Line',
     category: 'Healthcare UI',
@@ -195,7 +48,7 @@ export const caseStudies = [
       },
       finalScreens: [
         { name: 'Emergency Request', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Donor Map', image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5eb3?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Donor Map', image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=600' },
         { name: 'Eligibility Quiz', image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600' },
         { name: 'Donation History', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600' },
         { name: 'Community Leaderboard', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=600' },
@@ -224,6 +77,80 @@ export const caseStudies = [
       ]
     }
   },
+  {
+    id: 1,
+    title: 'Radiologist Mobile App',
+    category: 'Healthcare UI',
+    description: 'A comprehensive application streamlining radiologist workflows, improving diagnosis speed, and enhancing patient data visualization.',
+    tags: ['Healthcare', 'Mobile App', 'Wireframes'],
+    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=800',
+    bannerImage: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1600',
+    details: {
+      projectType: 'Healthcare Mobile Application',
+      role: 'UI/UX Designer',
+      duration: '3 Months',
+      tools: 'Figma, Photoshop, Illustrator',
+      metrics: [
+        'Healthcare Platform',
+        'Mobile Application',
+        'User-Centered Design',
+        'End-to-End UX Process'
+      ],
+      overview: {
+        problem: 'Radiologists spend significant time navigating complex systems, leading to inefficiencies and increased cognitive load.',
+        goal: 'Design an intuitive mobile experience that enables radiologists to review reports, manage tasks, and access patient information efficiently.'
+      },
+      research: {
+        interviews: 'Conducted in-depth interviews with radiologists to understand their daily workflows and pain points.',
+        observations: 'Shadowed radiologists during their shifts to observe their interactions with existing systems in real-time.',
+        stakeholders: 'Regular discussions with hospital administrators and IT staff to align on technical constraints and security requirements.',
+        keyFindings: [
+          'Too many clicks',
+          'Poor navigation',
+          'Difficult report access',
+          'Information overload'
+        ]
+      },
+      wireframes: {
+        lofi: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&q=80&w=800',
+        midfi: 'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&q=80&w=800',
+      },
+      designExploration: {
+        typography: { primary: 'Inter', secondary: 'Inter' },
+        colors: ['#0ea5e9', '#0f172a', '#f8fafc', '#10b981'],
+      },
+      finalScreens: [
+        { name: 'Dashboard', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Patient List', image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Patient Details', image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Report Review', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Notifications', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Profile', image: 'https://images.unsplash.com/photo-1544256718-3b61023b49e3?auto=format&fit=crop&q=80&w=600' }
+      ],
+      keyDecisions: [
+        { title: 'Simplified Navigation', desc: 'Reduced navigation complexity.' },
+        { title: 'Improved Readability', desc: 'Enhanced typography and hierarchy.' },
+        { title: 'Faster Workflows', desc: 'Reduced steps required to complete tasks.' },
+        { title: 'Better Accessibility', desc: 'Improved touch targets and contrast.' }
+      ],
+      challengesSolutions: [
+        { challenge: 'Managing large amounts of medical information', solution: 'Introduced progressive disclosure and collapsible sections.' }
+      ],
+      outcomes: [
+        { metric: 'Reduced', label: 'Task completion time' },
+        { metric: 'Improved', label: 'Usability' },
+        { metric: 'Increased', label: 'Efficiency' },
+        { metric: 'Better', label: 'User satisfaction' }
+      ],
+      lessonsLearned: [
+        'User research importance',
+        'Healthcare UX considerations',
+        'Accessibility improvements',
+        'Design system consistency'
+      ]
+    }
+  },
+
   {
     id: 5,
     title: 'PropertyWorld',
@@ -270,7 +197,7 @@ export const caseStudies = [
       finalScreens: [
         { name: 'Home Map Search', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600' },
         { name: 'Property Details', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
-        { name: 'Filter Drawer', image: 'https://images.unsplash.com/photo-1576091160550-2173ff9e5eb3?auto=format&fit=crop&q=80&w=600' },
+        { name: 'Filter Drawer', image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=600' },
         { name: 'Saved Homes', image: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=600' },
         { name: 'Virtual Tour', image: 'https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=600' },
         { name: 'Agent Contact', image: 'https://images.unsplash.com/photo-1544256718-3b61023b49e3?auto=format&fit=crop&q=80&w=600' }
@@ -379,53 +306,57 @@ const CaseStudies = () => {
   return (
     <section id="work" className="case-studies-section">
       <div className="container">
-        <motion.h2 
+        <motion.div 
+          className="case-studies-header"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="section-title"
         >
-          Featured <span className="text-gradient">Case Studies</span>
-        </motion.h2>
+          <div className="header-left">
+            <span className="featured-label">FEATURED WORK</span>
+            <h2 className="section-title-large">Selected case studies.</h2>
+          </div>
+          <div className="header-right">
+            <p className="section-desc">
+              A peek inside the process — from problem framing and research to the final UI and the outcome.
+            </p>
+          </div>
+        </motion.div>
 
         <div className="case-studies-grid">
           {caseStudies.map((project, idx) => (
             <motion.div 
               key={project.id} 
-              className="case-study-card glass"
+              className="case-study-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: (idx % 3) * 0.15 }}
-              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+              transition={{ duration: 0.6, delay: (idx % 2) * 0.15 }}
+              whileHover={{ y: -8 }}
             >
-              <div className="case-study-image-wrapper" style={{ overflow: 'hidden' }}>
-                <motion.img 
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.4 }}
-                  src={project.image} 
-                  alt={project.title} 
-                  className="case-study-image" 
-                  loading="lazy" 
-                />
-                <div className="case-study-overlay">
-                  <button className="btn btn-primary">View Project</button>
+              <Link to={`/case-study/${project.id}`} className="case-study-link-wrapper">
+                <div className="case-study-image-container">
+                  <div className="case-study-badge">
+                    {project.category.toUpperCase()}
+                  </div>
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="case-study-image" 
+                    loading="lazy" 
+                  />
                 </div>
-              </div>
-              <div className="case-study-content">
-                <span className="case-study-category">{project.category}</span>
-                <h3 className="case-study-title">{project.title}</h3>
-                <p className="case-study-desc">{project.description}</p>
-                <div className="case-study-tags">
-                  {project.tags.map((tag, tIdx) => (
-                    <span key={tIdx} className="tag">{tag}</span>
-                  ))}
+                <div className="case-study-content">
+                  <div className="case-study-title-row">
+                    <h3 className="case-study-title">{project.title}</h3>
+                    <div className="case-study-arrow">
+                      <ArrowRight size={18} style={{ transform: 'rotate(-45deg)' }} />
+                    </div>
+                  </div>
+                  <p className="case-study-desc">{project.description}</p>
                 </div>
-                <Link to={`/case-study/${project.id}`} className="view-case-study-link">
-                  Read Case Study <ArrowRight size={16} className="ml-2" />
-                </Link>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>

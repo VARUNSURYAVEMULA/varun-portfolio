@@ -26,9 +26,8 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
     { name: 'Work', href: '#work' },
+    { name: 'About', href: '#about' },
     { name: 'Process', href: '#process' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -41,8 +40,9 @@ const Navbar = () => {
       className={`navbar ${isScrolled ? 'scrolled glass' : ''}`}
     >
       <div className="container nav-container">
-        <a href="#" className="logo-link">
-          <img src="/logo.svg" alt="VSV Logo" className="navbar-logo" />
+        <a href="#" className="logo-link" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+          <div className="logo-icon">V</div>
+          <span className="logo-text">Varun Surya</span>
         </a>
         
         <div className="nav-links-desktop" onMouseLeave={() => setHoveredLink(null)}>
@@ -74,16 +74,29 @@ const Navbar = () => {
               )}
             </a>
           ))}
+        </div>
 
+        <div className="nav-actions-desktop" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={toggleTheme} 
             className="theme-toggle" 
             aria-label="Toggle Theme"
           >
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </motion.button>
+          
+          <motion.a 
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="navbar-resume-btn"
+          >
+            Resume <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2" style={{ transform: 'rotate(0deg)' }}><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+          </motion.a>
         </div>
 
         <div className="nav-mobile-toggle">

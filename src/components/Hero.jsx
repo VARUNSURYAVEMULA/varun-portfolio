@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Download } from 'lucide-react';
 import { LinkedinIcon, BehanceIcon, MailIcon } from './Icons';
 import './Hero.css';
 
@@ -27,30 +26,11 @@ const Hero = () => {
     }
   };
 
-  const ctaVariants = {
-    hidden: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5, ease: "easeOut", delay: 0.6 }
-    }
-  };
-
   return (
     <section className="hero" id="home">
       <div className="hero-background">
-        <motion.div
-          className="glow glow-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2 }}
-        ></motion.div>
-        <motion.div
-          className="glow glow-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2, delay: 0.5 }}
-        ></motion.div>
+        <div className="hero-bg-gradient"></div>
+        <div className="hero-bg-dots"></div>
       </div>
 
       <div className="container hero-container">
@@ -60,40 +40,66 @@ const Hero = () => {
           initial="hidden"
           animate="visible"
         >
-          <motion.span variants={itemVariants} className="hero-greeting text-gradient">
-            Hello, I'm
-          </motion.span>
+          <motion.div variants={itemVariants} className="hero-badge">
+            <span className="badge-dot"></span>
+            AVAILABLE FOR SELECT WORK &middot; HYDERABAD, INDIA
+          </motion.div>
+
           <motion.h1 variants={itemVariants} className="hero-name">
-            Varun Surya Vemula
+            Varun Surya <br />
+            <span className="text-gradient">Vemula</span>
           </motion.h1>
-          <motion.h2 variants={itemVariants} className="hero-role">
-            UI/UX Designer
-          </motion.h2>
 
-          <motion.p variants={itemVariants} className="hero-tagline">
-            Crafting intuitive, accessible, and beautiful digital experiences.
-          </motion.p>
+          <div className="hero-bottom-section">
+            <div className="hero-text-block">
+              <motion.p variants={itemVariants} className="hero-tagline">
+                Designing intuitive digital experiences for healthcare<br />
+                and enterprise platforms.
+              </motion.p>
+              <motion.p variants={itemVariants} className="hero-roles">
+                UI/UX DESIGNER &middot; PRODUCT DESIGNER
+              </motion.p>
+            </div>
+            
+            <motion.div variants={itemVariants} className="hero-ctas">
+              <a href="#work" className="btn-hero-primary">
+                View Projects 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+              </a>
+              <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn-hero-secondary">
+                Download Resume 
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
 
-          <motion.div variants={ctaVariants} initial="hidden" animate="visible" className="hero-ctas">
-            <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="#work" className="btn btn-primary">
-              View My Work <ArrowRight size={18} className="ml-2" />
-            </motion.a>
-            <motion.a whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} href="/resume.pdf" className="btn btn-secondary">
-              Download Resume <Download size={18} className="ml-2" />
-            </motion.a>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="hero-socials">
-            <motion.a whileHover={{ y: -3 }} href="https://www.linkedin.com/in/varunsuryavemula" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="social-link">
-              <LinkedinIcon size={20} /> LinkedIn
-            </motion.a>
-            <motion.a whileHover={{ y: -3 }} href="https://www.behance.net/varunsurya1" target="_blank" rel="noreferrer" aria-label="Behance" className="social-link">
-              <BehanceIcon size={20} /> Behance
-            </motion.a>
-            <motion.a whileHover={{ y: -3 }} href="mailto:hello@example.com" aria-label="Email" className="social-link">
-              <MailIcon size={20} /> Email
-            </motion.a>
-          </motion.div>
+      <div className="container hero-footer">
+        <motion.div 
+          className="hero-socials"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.5 }}
+        >
+          <a href="https://www.linkedin.com/in/varunsuryavemula" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="social-pill">
+            <LinkedinIcon size={16} /> LinkedIn
+          </a>
+          <a href="https://www.behance.net/varunsurya1" target="_blank" rel="noreferrer" aria-label="Behance" className="social-pill">
+            <BehanceIcon size={16} /> Behance
+          </a>
+          <a href="mailto:hello@example.com" aria-label="Email" className="social-pill">
+            <MailIcon size={16} /> Email
+          </a>
+        </motion.div>
+        
+        <motion.div 
+          className="scroll-indicator"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+        >
+          SCROLL <span className="scroll-line"></span>
         </motion.div>
       </div>
     </section>
