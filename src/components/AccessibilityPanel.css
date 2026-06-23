@@ -43,7 +43,8 @@
   width: 100%;
   max-width: 440px;
   max-height: 100vh;
-  background: #eef2f6; /* light blue/gray background matching the image */
+  background: #eef2f6;
+  /* light blue/gray background matching the image */
   border-radius: 20px 0 0 20px;
   display: flex;
   flex-direction: column;
@@ -53,8 +54,15 @@
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(100%); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .a11y-panel-header {
@@ -68,7 +76,8 @@
   margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1a1a1a; /* Dark text */
+  color: #1a1a1a;
+  /* Dark text */
 }
 
 .a11y-close-btn {
@@ -106,7 +115,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-  color: #1a1a1a; /* Black text */
+  color: #1a1a1a;
+  /* Black text */
 }
 
 .a11y-grid-btn:hover {
