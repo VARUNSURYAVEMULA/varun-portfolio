@@ -60,15 +60,14 @@ const Hero = () => {
                 UI/UX DESIGNER &middot; PRODUCT DESIGNER
               </motion.p>
             </div>
-            
+
             <motion.div variants={itemVariants} className="hero-ctas">
               <a href="#work" className="btn-hero-primary">
-                View Projects 
+                View Projects &nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
               </a>
               <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn-hero-secondary">
-                Download Resume 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                Download Resume
               </a>
             </motion.div>
           </div>
@@ -76,7 +75,7 @@ const Hero = () => {
       </div>
 
       <div className="container hero-footer">
-        <motion.div 
+        <motion.div
           className="hero-socials"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -91,15 +90,6 @@ const Hero = () => {
           <a href="mailto:hello@example.com" aria-label="Email" className="social-pill">
             <MailIcon size={16} /> Email
           </a>
-        </motion.div>
-        
-        <motion.div 
-          className="scroll-indicator"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
-        >
-          SCROLL <span className="scroll-line"></span>
         </motion.div>
       </div>
     </section>

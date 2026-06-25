@@ -48,7 +48,7 @@
   position: absolute;
   top: 10px;
   bottom: 0;
-  left: 19px;
+  left: 17px;
   width: 2px;
   background: var(--border-color);
   z-index: 0;
@@ -57,7 +57,7 @@
 .timeline-line-fill {
   position: absolute;
   top: 10px;
-  left: 19px;
+  left: 17px;
   width: 2px;
   background: #3b82f6; /* Solid bright blue for the scroll line */
   z-index: 1;

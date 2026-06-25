@@ -1,52 +1,178 @@
 .skills-section {
-  background-color: rgba(0,0,0,0.02); /* Slight contrast for light mode */
+  padding: 8rem 0;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-primary);
 }
 
-[data-theme='dark'] .skills-section {
-  background-color: rgba(255,255,255,0.01);
+.skills-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.skills-grid {
+.skills-subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.skills-bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+  width: 100%;
 }
 
-.skill-category-card {
-  padding: 2rem;
-  transition: transform 0.3s ease;
+.skill-bento-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
 }
 
-.skill-category-card:hover {
-  transform: translateY(-5px);
+[data-theme='dark'] .skill-bento-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
-.skill-title {
-  font-size: 1.25rem;
-  color: var(--text-primary);
+.skill-bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.15);
+  background: var(--bg-secondary);
+  cursor: pointer;
+}
+
+[data-theme='dark'] .skill-bento-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.15);
+}
+
+.card-content-wrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.skill-icon-header {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color);
 }
 
-.skill-tags {
+.skill-bento-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.skill-bento-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.skill-chips-container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  margin-top: auto;
 }
 
-.skill-tag {
-  background: var(--bg-secondary);
+.skill-chip-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.05);
   border: 1px solid var(--border-color);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
 }
 
-.skill-tag:hover {
-  background: var(--gradient-accent);
+[data-theme='dark'] .skill-chip {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.skill-chip:hover, .skill-chip:focus-visible {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   border-color: transparent;
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  outline: none;
+}
+
+.skill-chip:active {
+  transform: scale(0.95);
+}
+
+.chip-icon {
+  position: absolute;
+  left: 0.75rem;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+}
+
+.skill-chip:hover .chip-icon, .skill-chip:focus-visible .chip-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.chip-text {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+.skill-chip:hover .chip-text, .skill-chip:focus-visible .chip-text {
+  transform: translateX(12px);
+}
+
+@media (max-width: 1024px) {
+  .skills-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .skills-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .skill-bento-card {
+    padding: 1.5rem;
+  }
 }
