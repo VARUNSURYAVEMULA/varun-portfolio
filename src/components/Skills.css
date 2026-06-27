@@ -132,6 +132,7 @@
   transform: scale(1.08);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   outline: none;
+  padding-right: calc(1.25rem + 12px);
 }
 
 .skill-chip:active {

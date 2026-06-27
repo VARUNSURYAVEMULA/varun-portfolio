@@ -76,7 +76,7 @@ const SkillChip = ({ skill, index, isHoveringCard }) => {
             duration: isHoveringCard ? floatDuration * 0.5 : floatDuration,
             repeat: Infinity,
             repeatType: "mirror",
-            // ease: "easeInOut",
+            ease: "easeInOut",
             delay: floatDelay
           },
           scale: {
