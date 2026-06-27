@@ -31,7 +31,7 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 20px;
-  padding: 2.5rem;
+  padding: 1.7rem;
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -125,7 +125,8 @@
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-.skill-chip:hover, .skill-chip:focus-visible {
+.skill-chip:hover,
+.skill-chip:focus-visible {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   border-color: transparent;
@@ -149,7 +150,8 @@
   align-items: center;
 }
 
-.skill-chip:hover .chip-icon, .skill-chip:focus-visible .chip-icon {
+.skill-chip:hover .chip-icon,
+.skill-chip:focus-visible .chip-icon {
   opacity: 1;
   transform: scale(1);
 }
@@ -159,7 +161,8 @@
   display: inline-block;
 }
 
-.skill-chip:hover .chip-text, .skill-chip:focus-visible .chip-text {
+.skill-chip:hover .chip-text,
+.skill-chip:focus-visible .chip-text {
   transform: translateX(12px);
 }
 
@@ -173,6 +176,7 @@
   .skills-bento-grid {
     grid-template-columns: 1fr;
   }
+
   .skill-bento-card {
     padding: 1.5rem;
   }
