@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -8,6 +9,9 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [hoveredLink, setHoveredLink] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -32,8 +36,25 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+
+    if (location.pathname === '/') {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        // Update URL without jumping
+        window.history.pushState(null, '', href);
+      }
+    } else {
+      navigate('/' + href);
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -44,15 +65,16 @@ const Navbar = () => {
           <div className="logo-icon">V</div>
           <span className="logo-text">Varun Surya</span>
         </a>
-        
+
         <div className="nav-links-desktop" onMouseLeave={() => setHoveredLink(null)}>
           {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
+            <a
+              key={link.name}
+              href={location.pathname === '/' ? link.href : '/' + link.href}
               className="nav-link"
               style={{ position: 'relative' }}
               onMouseEnter={() => setHoveredLink(link.name)}
+              onClick={(e) => handleNavClick(e, link.href)}
             >
               {link.name}
               {hoveredLink === link.name && (
@@ -77,17 +99,17 @@ const Navbar = () => {
         </div>
 
         <div className="nav-actions-desktop" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <motion.button 
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={toggleTheme} 
-            className="theme-toggle" 
+            onClick={toggleTheme}
+            className="theme-toggle"
             aria-label="Toggle Theme"
           >
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </motion.button>
-          
-          <motion.a 
+
+          <motion.a
             href="/resume.pdf"
             target="_blank"
             rel="noreferrer"
@@ -102,18 +124,18 @@ const Navbar = () => {
         <div className="nav-mobile-toggle">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginRight: '1rem' }}>
 
-            <motion.button 
+            <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={toggleTheme} 
-              className="theme-toggle" 
+              onClick={toggleTheme}
+              className="theme-toggle"
               aria-label="Toggle Theme"
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </motion.button>
           </div>
-          <motion.button 
+          <motion.button
             whileTap={{ scale: 0.9 }}
-            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle Menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -123,7 +145,7 @@ const Navbar = () => {
 
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20, height: 0 }}
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: -20, height: 0 }}
@@ -132,14 +154,14 @@ const Navbar = () => {
             style={{ overflow: 'hidden' }}
           >
             {navLinks.map((link, i) => (
-              <motion.a 
+              <motion.a
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                key={link.name} 
-                href={link.href} 
+                key={link.name}
+                href={location.pathname === '/' ? link.href : '/' + link.href}
                 className="nav-link-mobile"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
               >
                 {link.name}
               </motion.a>

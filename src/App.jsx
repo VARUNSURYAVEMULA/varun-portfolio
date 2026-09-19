@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import CaseStudyDetail from './components/CaseStudyDetail';
+
 import AccessibilityStatement from './components/AccessibilityStatement';
 import AccessibilityPanel from './components/AccessibilityPanel';
 import ReadingGuide from './components/ReadingGuide';
@@ -11,6 +11,10 @@ import { AccessibilityProvider } from './context/AccessibilityContext';
 import { LanguageProvider } from './context/LanguageContext';
 import './styles/accessibility.css';
 import './App.css';
+
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -23,11 +27,7 @@ function AnimatedRoutes() {
             <Home />
           </motion.div>
         } />
-        <Route path="/case-study/:id" element={
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
-            <CaseStudyDetail />
-          </motion.div>
-        } />
+
         <Route path="/accessibility" element={
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
             <AccessibilityStatement />
