@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = window.scrollY || document.documentElement.scrollTop || 0;
 
       const contactSection = document.getElementById('contact');
       const experienceSection = document.getElementById('experience');
@@ -57,14 +57,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
 
       setActiveTab(currentTab);
 
-      // Home (first section / hero) -> default floating capsule pill (Image 2)
-      // When moving to any other section (Work, About, Experience, Contact, etc.) -> full screen width (Image 1)
-      const homeThreshold = workSection ? Math.max(workSection.offsetTop - 200, 100) : 250;
-      if (currentScrollY < homeThreshold) {
-        setIsFullWidth(false);
-      } else {
-        setIsFullWidth(true);
-      }
+      // Floating capsule pill ONLY when at the very top (scrollY === 0)
+      // Expands to full width (like remaining sections) the moment user scrolls any small amount (> 0)
+      setIsFullWidth(currentScrollY > 0);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -98,7 +93,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
   const handleNavClick = (tab: TabType, href?: string) => {
     setActiveTab(tab);
     setIsMenuOpen(false);
-    setIsFullWidth(tab !== 'Home');
+    if (tab !== 'Home') {
+      setIsFullWidth(true);
+    }
 
     if (href) {
       const el = document.querySelector(href);
@@ -115,19 +112,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none transition-all duration-300 ease-out ${
-        isFullWidth
-          ? 'pt-0 px-0'
-          : 'pt-2.5 sm:pt-4 px-3 sm:px-6'
-      }`}
-    >
-      {/* Floating Capsule Bar (expands full width on scroll up/top, shrinks to capsule on scroll down) */}
-      <nav
-        className={`pointer-events-auto relative flex items-center justify-between transition-all duration-300 ease-out ${
-          isFullWidth
-            ? 'w-full max-w-none rounded-none border-t-0 border-x-0 border-b border-white/10 bg-[#070709]/90 backdrop-blur-2xl px-4 sm:px-8 md:px-12 lg:px-16 py-3 sm:py-3.5 shadow-lg shadow-black/40'
-            : 'w-full max-w-5xl rounded-full border border-white/15 bg-[#0a0a0c]/95 backdrop-blur-2xl px-3.5 sm:px-5 py-2 sm:py-2.5 shadow-2xl shadow-black/90'
+      className={`fixed top-0 left-0 right-0 z-50 flex flex-col items-center pointer-events-none nav-header-morph ${isFullWidth
+        ? 'pt-0 px-0'
+        : 'pt-2.5 sm:pt-4 px-3 sm:px-6'
         }`}
+    >
+      {/* Floating Capsule Bar (smoothly morphs between capsule pill and edge-to-edge bar) */}
+      <nav
+        className={`pointer-events-auto relative flex items-center justify-between nav-smooth-morph ${isFullWidth
+          ? 'w-full max-w-full rounded-none border border-b-white/10 border-t-transparent border-x-transparent bg-[#070709]/90 backdrop-blur-2xl px-4 sm:px-8 md:px-12 lg:px-16 py-3 sm:py-3.5 shadow-lg shadow-black/40'
+          : 'w-full max-w-5xl rounded-[32px] border border-white/15 bg-[#0a0a0c]/95 backdrop-blur-2xl px-3.5 sm:px-5 py-2 sm:py-2.5 shadow-2xl shadow-black/90'
+          }`}
       >
         {/* 1. Left Section: Stylized Monogram Logo + Name + Role Badge */}
         <a
@@ -185,11 +180,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
               <button
                 key={item.name}
                 onClick={() => handleNavClick(item.name, item.href)}
-                className={`relative text-xs sm:text-sm font-medium transition-colors duration-200 ${
-                  isActive
-                    ? 'text-text-primary font-semibold'
-                    : 'text-muted hover:text-text-primary'
-                }`}
+                className={`relative text-xs sm:text-sm font-medium transition-colors duration-200 ${isActive
+                  ? 'text-text-primary font-semibold'
+                  : 'text-muted hover:text-text-primary'
+                  }`}
               >
                 <span>{item.label}</span>
                 {isActive && (
@@ -221,20 +215,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
             />
             <span>Resume</span>
           </a>
-
-          {/* Theme Toggle Button */}
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/15 border border-white/10 text-muted hover:text-white transition-all duration-200"
-          >
-            {isDarkMode ? (
-              <Moon size={14} className="text-[#89AACC]" />
-            ) : (
-              <Sun size={14} className="text-amber-300" />
-            )}
-          </button>
 
           {/* Mobile Menu Hamburger Toggle (Visible on Mobile) */}
           <button
@@ -283,8 +263,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
                       key={item.name}
                       onClick={() => handleNavClick(item.name, item.href)}
                       className={`w-full flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium transition-all ${isActive
-                          ? 'text-text-primary bg-white/10 font-semibold'
-                          : 'text-muted hover:text-text-primary hover:bg-white/5'
+                        ? 'text-text-primary bg-white/10 font-semibold'
+                        : 'text-muted hover:text-text-primary hover:bg-white/5'
                         }`}
                     >
                       <span>{item.label}</span>
@@ -296,25 +276,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
                     </button>
                   );
                 })}
-
-                <div className="h-px bg-white/10 my-1 mx-2" />
-
-                {/* Theme toggle option in mobile menu */}
-                <button
-                  type="button"
-                  onClick={toggleTheme}
-                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium text-muted hover:text-text-primary hover:bg-white/5 transition-all"
-                >
-                  <span className="flex items-center gap-2">
-                    {isDarkMode ? (
-                      <Moon size={14} className="text-[#89AACC]" />
-                    ) : (
-                      <Sun size={14} className="text-amber-300" />
-                    )}
-                    <span>{isDarkMode ? 'Dark Theme' : 'Light Theme'}</span>
-                  </span>
-                  <span className="text-[10px] font-mono uppercase text-muted/60">Toggle</span>
-                </button>
               </div>
             </motion.div>
           </>

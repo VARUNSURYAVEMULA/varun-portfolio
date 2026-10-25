@@ -9,7 +9,6 @@ const MARQUEE_TEXT = 'DESIGNING CALM, HUMAN-FIRST EXPERIENCES • '.repeat(8);
 const SOCIAL_LINKS = [
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/varunsuryavemula' },
   { name: 'Behance', url: 'https://www.behance.net/varunsurya1' },
-  { name: 'GitHub', url: 'https://github.com/varunsurya' },
   { name: 'Email', url: 'mailto:ux.varunsurya@gmail.com' },
 ];
 

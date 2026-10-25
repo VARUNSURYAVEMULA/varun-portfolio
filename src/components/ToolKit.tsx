@@ -53,18 +53,6 @@ const TOOLS: ToolItem[] = [
     ),
   },
   {
-    id: 'rive',
-    name: 'Rive',
-    category: 'Design',
-    tag: 'Interactive',
-    desc: 'Runtime interactive state-machine graphics & physics',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7" fill="none">
-        <path d="M5 4h8a5 5 0 0 1 3.5 8.5L20 20h-4.5l-3-7H9v7H5V4zm4 3.5v3h4a1.5 1.5 0 0 0 0-3H9z" fill="#F45F43" />
-      </svg>
-    ),
-  },
-  {
     id: 'mobbin',
     name: 'Mobbin',
     category: 'Creative',
@@ -134,22 +122,6 @@ const TOOLS: ToolItem[] = [
     ),
   },
   {
-    id: 'cursor',
-    name: 'Cursor',
-    category: 'AI & Code',
-    tag: 'AI Editor',
-    desc: 'Rapid code prototyping & design-system implementation',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7" fill="none">
-        <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" fill="#18181B" stroke="#52525B" strokeWidth="1.2" />
-        <path d="M12 2l9 5-9 5-9-5 9-5z" fill="#27272A" />
-        <path d="M12 12v10l9-5V7l-9 5z" fill="#3F3F46" />
-        <path d="M12 12L3 7v10l9 5V12z" fill="#18181B" />
-        <path d="M12 7l4.5 2.5L12 12 7.5 9.5 12 7z" fill="#A1A1AA" />
-      </svg>
-    ),
-  },
-  {
     id: 'ai',
     name: 'AI',
     category: 'AI & Code',
@@ -159,18 +131,6 @@ const TOOLS: ToolItem[] = [
       <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7" fill="none">
         <path d="M21.5 10.4c-.2-1.4-1.2-2.5-2.5-2.9-.3-.8-.9-1.5-1.7-1.9-1.2-.7-2.7-.6-3.8.1-.5-.5-1.3-.9-2.1-.9-1.4 0-2.6.9-3 2.2-.8.1-1.6.5-2.1 1.2-.8 1-1 2.4-.5 3.6-.4.5-.7 1.2-.7 1.9 0 1.5.9 2.8 2.2 3.3.1.8.6 1.6 1.3 2.1 1.1.8 2.6.8 3.7.1.5.6 1.3 1 2.2 1 1.4 0 2.7-.9 3.1-2.2.8-.1 1.5-.5 2-1.1.9-1.1 1-2.5.5-3.8.4-.5.7-1.2.7-1.8 0-.4 0-.7-.1-1z" stroke="#10A37F" strokeWidth="1.6" strokeLinejoin="round" />
         <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="#10A37F" strokeWidth="1.6" />
-      </svg>
-    ),
-  },
-  {
-    id: 'supabase',
-    name: 'Supabase',
-    category: 'AI & Code',
-    tag: 'Database',
-    desc: 'Functional mock databases & authentication backends',
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 sm:w-7 sm:h-7" fill="none">
-        <path d="M13.5 2L3 14.5h8.5L10.5 22 21 9.5h-8.5L13.5 2z" fill="#3ECF8E" />
       </svg>
     ),
   },
@@ -236,11 +196,10 @@ export const ToolKit: React.FC = () => {
               <button
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
-                className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
-                  activeFilter === tab
+                className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${activeFilter === tab
                     ? 'text-text-primary bg-white/10 shadow-sm'
                     : 'text-muted hover:text-text-primary hover:bg-white/5'
-                }`}
+                  }`}
               >
                 {tab}
               </button>

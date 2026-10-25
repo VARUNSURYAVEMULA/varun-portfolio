@@ -84,6 +84,16 @@
   background: linear-gradient(90deg, #89AACC 0%, #4E85BF 100%);
 }
 
+.nav-smooth-morph {
+  transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: max-width, border-radius, padding, background-color, border-color, box-shadow;
+}
+
+.nav-header-morph {
+  transition: padding 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: padding;
+}
+
 .accent-gradient-rev {
   background: linear-gradient(270deg, #89AACC 0%, #4E85BF 100%);
 }
