@@ -8,7 +8,6 @@ import { About } from './components/About';
 import { DesignProcess } from './components/DesignProcess';
 import { ToolKit } from './components/ToolKit';
 import { Experience } from './components/Experience';
-import { Explorations } from './components/Explorations';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { ProjectModal } from './components/ProjectModal';
@@ -69,9 +68,6 @@ export const Index: React.FC = () => {
 
         {/* Section 7: Experience */}
         <Experience />
-
-        {/* Section 8: Explorations (Parallax Gallery) */}
-        <Explorations />
       </main>
 
       {/* Section 7: Contact / Footer */}
