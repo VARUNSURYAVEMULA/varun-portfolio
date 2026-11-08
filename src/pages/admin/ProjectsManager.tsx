@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { usePortfolio } from '../../context/PortfolioContext';
-import { uploadAsset } from '../../lib/supabase';
+import { uploadAsset, isSupabaseConfigured } from '../../lib/supabase';
+import demoVideo from '../../assets/demo.mp4';
+import radflowVideo from '../../assets/Radflow.mp4';
 import {
   Plus,
   Search,
@@ -18,6 +20,7 @@ import {
   X,
   ArrowUpDown,
   Sparkles,
+  Video,
 } from 'lucide-react';
 
 export const ProjectsManager: React.FC = () => {
@@ -209,6 +212,32 @@ export const ProjectsManager: React.FC = () => {
     }
   };
 
+  // Video upload handler
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingVideo(true);
+    if (!isSupabaseConfigured()) {
+      const url = URL.createObjectURL(file);
+      setFormData((prev) => ({ ...prev, video_url: url }));
+      setIsUploadingVideo(false);
+      showToast('Video attached for local preview!');
+      return;
+    }
+
+    const result = await uploadAsset(file, 'portfolio-assets');
+    setIsUploadingVideo(false);
+
+    if (result.url) {
+      setFormData((prev) => ({ ...prev, video_url: result.url }));
+      showToast('Video uploaded successfully!');
+    } else {
+      showToast(result.error || 'Failed to upload video.', 'error');
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Toast Notification */}
@@ -314,19 +343,45 @@ export const ProjectsManager: React.FC = () => {
               ) : (
                 filteredProjects.map((project: any) => (
                   <tr key={project.id} className="group hover:bg-white/[0.02] transition-colors">
-                    {/* Thumbnail */}
-                    <td className="py-3.5 px-4 w-20">
-                      <img
-                        src={project.image || project.thumbnail_url}
-                        alt={project.title}
-                        className="w-14 h-11 rounded-xl object-cover border border-stroke/60 bg-bg shrink-0"
-                      />
+                    {/* Thumbnail / Video Preview */}
+                    <td className="py-3.5 px-4 w-24">
+                      <div className="relative w-16 h-12 rounded-xl overflow-hidden border border-stroke/60 bg-bg shrink-0">
+                        {project.video || project.video_url ? (
+                          <>
+                            <video
+                              src={project.video || project.video_url}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              className="w-full h-full object-cover"
+                            />
+                            <span className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/80 text-[8px] font-mono text-[#89AACC] font-bold tracking-wider leading-none">
+                              VID
+                            </span>
+                          </>
+                        ) : (
+                          <img
+                            src={project.image || project.thumbnail_url}
+                            alt={project.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </div>
                     </td>
 
                     {/* Details */}
                     <td className="py-3.5 px-4 max-w-xs sm:max-w-md">
-                      <div className="font-medium text-text-primary text-sm group-hover:text-white transition-colors">
-                        {project.title}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-medium text-text-primary text-sm group-hover:text-white transition-colors">
+                          {project.title}
+                        </span>
+                        {(project.video || project.video_url) && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-[#4E85BF]/15 text-[#89AACC] border border-[#4E85BF]/30 text-[9px] font-mono font-medium">
+                            <Video size={10} />
+                            <span>Video</span>
+                          </span>
+                        )}
                       </div>
                       <div className="text-xs text-muted font-light line-clamp-1 mt-0.5">
                         {project.subtitle || project.description}
@@ -634,6 +689,87 @@ export const ProjectsManager: React.FC = () => {
                           className="w-20 h-14 rounded-lg object-cover border border-stroke/60 bg-black/40"
                         />
                         <span className="text-[11px] text-muted font-light">Preview ready</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Video Section */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-muted font-mono text-[11px] flex items-center gap-1.5">
+                        <Video size={13} className="text-[#89AACC]" />
+                        <span>PROJECT VIDEO (AUTOPLAY LOOP ON CARD - OPTIONAL)</span>
+                      </label>
+                      {formData.video_url && (
+                        <button
+                          type="button"
+                          onClick={() => setFormData({ ...formData, video_url: '' })}
+                          className="text-[10px] text-red-400 hover:text-red-300 font-mono transition-colors"
+                        >
+                          Remove Video
+                        </button>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="text"
+                        value={formData.video_url}
+                        onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                        placeholder="Video URL or path (e.g. /assets/demo.mp4 or https://...)"
+                        className="flex-1 bg-bg border border-stroke rounded-xl px-3.5 py-2.5 text-text-primary outline-none focus:border-[#89AACC]"
+                      />
+                      <label className="cursor-pointer inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-stroke bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors shrink-0">
+                        <Upload size={14} />
+                        <span>{isUploadingVideo ? 'Uploading...' : 'Upload Video'}</span>
+                        <input
+                          type="file"
+                          accept="video/*"
+                          onChange={handleVideoUpload}
+                          disabled={isUploadingVideo}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+
+                    {/* Quick Presets for Varun's local videos */}
+                    <div className="mt-2 flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] text-muted font-mono">Quick Presets:</span>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, video_url: demoVideo })}
+                        className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-stroke text-[11px] text-text-primary/90 transition-colors"
+                      >
+                        Blood Donation (Demo Video)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, video_url: radflowVideo })}
+                        className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-stroke text-[11px] text-text-primary/90 transition-colors"
+                      >
+                        RadFlow Video
+                      </button>
+                    </div>
+
+                    {/* Video Player Preview */}
+                    {formData.video_url && (
+                      <div className="mt-3 p-3 rounded-2xl bg-black/40 border border-stroke/60 flex items-start gap-3">
+                        <video
+                          src={formData.video_url}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="w-28 h-20 rounded-xl object-cover border border-white/10 bg-black shrink-0"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="text-xs font-medium text-emerald-400 flex items-center gap-1.5">
+                            <CheckCircle2 size={13} />
+                            <span>Video Active &amp; Verified</span>
+                          </div>
+                          <p className="text-[11px] text-muted mt-1 leading-relaxed">
+                            This video will automatically loop silently on the public portfolio card, creating a dynamic interactive preview for visitors.
+                          </p>
+                        </div>
                       </div>
                     )}
                   </div>

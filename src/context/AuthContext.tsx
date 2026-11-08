@@ -22,16 +22,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const configured = isSupabaseConfigured();
 
+  const envAdminEmail = (import.meta.env.VITE_ADMIN_EMAIL || 'ux.varunsurya@gmail.com').trim().toLowerCase();
+  const envAdminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+
   useEffect(() => {
     if (!configured) {
-      if (localStorage.getItem('varun_portfolio_admin_preview') === 'true') {
-        const mockUser: any = {
-          id: 'local-admin-varun',
-          email: 'ux.varunsurya@gmail.com',
-          user_metadata: { full_name: 'Varun Surya' },
-        };
-        setUser(mockUser);
-        setSession({ user: mockUser } as any);
+      // Restore standalone session
+      const saved = localStorage.getItem('varun_portfolio_admin_auth') || sessionStorage.getItem('varun_portfolio_admin_auth');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setUser(parsed.user);
+          setSession(parsed);
+        } catch {
+          localStorage.removeItem('varun_portfolio_admin_auth');
+          sessionStorage.removeItem('varun_portfolio_admin_auth');
+        }
       }
       setIsLoading(false);
       return;
@@ -61,28 +67,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password: string, rememberMe: boolean = true) => {
     if (!configured) {
-      // Local preview mode when Supabase credentials are not yet entered in .env
-      const normalizedEmail = email.trim().toLowerCase();
-      if (
-        (normalizedEmail === 'ux.varunsurya@gmail.com' || normalizedEmail === 'admin@varunsurya.design' || normalizedEmail === 'admin') &&
-        (password === 'admin123' || password === 'admin')
-      ) {
+      // Standalone authentication via environment variables
+      if (!envAdminPassword) {
+        return {
+          success: false,
+          error: 'Please set VITE_ADMIN_PASSWORD in your .env file to enable administrator login.',
+        };
+      }
+
+      const inputEmail = email.trim().toLowerCase();
+      if (inputEmail === envAdminEmail && password === envAdminPassword) {
         const mockUser: any = {
-          id: 'local-admin-varun',
-          email: normalizedEmail === 'admin' ? 'ux.varunsurya@gmail.com' : normalizedEmail,
+          id: 'admin_varun',
+          email: envAdminEmail,
           user_metadata: { full_name: 'Varun Surya' },
         };
+        const mockSession: any = {
+          access_token: 'standalone-session-token',
+          user: mockUser,
+          expires_at: Date.now() + 86400000 * 30,
+        };
+
         setUser(mockUser);
-        setSession({ user: mockUser } as any);
+        setSession(mockSession);
+
         if (rememberMe) {
-          localStorage.setItem('varun_portfolio_admin_preview', 'true');
+          localStorage.setItem('varun_portfolio_admin_auth', JSON.stringify(mockSession));
+        } else {
+          sessionStorage.setItem('varun_portfolio_admin_auth', JSON.stringify(mockSession));
         }
+
         return { success: true };
       }
 
       return {
         success: false,
-        error: 'Demo credentials for local preview: Email: ux.varunsurya@gmail.com | Password: admin123',
+        error: 'Invalid administrator email or password. Please verify your credentials.',
       };
     }
 
@@ -117,7 +137,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setUser(null);
     setSession(null);
-    localStorage.removeItem('varun_portfolio_admin_preview');
+    localStorage.removeItem('varun_portfolio_admin_auth');
+    sessionStorage.removeItem('varun_portfolio_admin_auth');
     sessionStorage.removeItem('varun_portfolio_admin_temp_session');
   };
 
@@ -166,12 +187,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     session,
     isLoading,
     isAuthenticated: Boolean(user),
-    isConfigured: configured,
+    isConfigured: configured || Boolean(envAdminPassword),
     signIn,
     signOut,
     resetPassword,
     updatePassword,
-  }), [user, session, isLoading, configured]);
+  }), [user, session, isLoading, configured, envAdminPassword]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

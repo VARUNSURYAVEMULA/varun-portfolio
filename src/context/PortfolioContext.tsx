@@ -214,15 +214,44 @@ const defaultCertifications: CertificationItem[] = [
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 
+const loadLocal = <T,>(key: string, fallback: T): T => {
+  try {
+    const raw = localStorage.getItem(`varun_cms_${key}`);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const saveLocal = (key: string, data: any) => {
+  try {
+    localStorage.setItem(`varun_cms_${key}`, JSON.stringify(data));
+  } catch (err) {
+    console.warn(`Failed to cache ${key} to localStorage:`, err);
+  }
+};
+
+const loadProjects = (): Project[] => {
+  const loaded = loadLocal<Project[]>('projects', PROJECTS);
+  return loaded.map((p) => {
+    const orig = PROJECTS.find((o) => o.id === p.id);
+    return {
+      ...p,
+      video: p.video || (p as any).video_url || orig?.video,
+      image: p.image || (p as any).thumbnail_url || orig?.image,
+    };
+  });
+};
+
 export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [profile, setProfile] = useState<ProfileInfo>(defaultProfile);
-  const [allProjects, setAllProjects] = useState<Project[]>(PROJECTS);
-  const [experiences, setExperiences] = useState<ExperienceItem[]>(EXPERIENCES);
-  const [skills, setSkills] = useState<SkillItem[]>(defaultSkills);
-  const [certifications, setCertifications] = useState<CertificationItem[]>(defaultCertifications);
-  const [resume, setResume] = useState<ResumeInfo>(defaultResume);
-  const [contact, setContact] = useState<ContactInfo>(defaultContact);
-  const [settings, setSettings] = useState<WebsiteSettings>(defaultSettings);
+  const [profile, setProfile] = useState<ProfileInfo>(() => loadLocal('profile', defaultProfile));
+  const [allProjects, setAllProjects] = useState<Project[]>(() => loadProjects());
+  const [experiences, setExperiences] = useState<ExperienceItem[]>(() => loadLocal('experiences', EXPERIENCES));
+  const [skills, setSkills] = useState<SkillItem[]>(() => loadLocal('skills', defaultSkills));
+  const [certifications, setCertifications] = useState<CertificationItem[]>(() => loadLocal('certifications', defaultCertifications));
+  const [resume, setResume] = useState<ResumeInfo>(() => loadLocal('resume', defaultResume));
+  const [contact, setContact] = useState<ContactInfo>(() => loadLocal('contact', defaultContact));
+  const [settings, setSettings] = useState<WebsiteSettings>(() => loadLocal('settings', defaultSettings));
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSupabaseLive, setIsSupabaseLive] = useState<boolean>(false);
 
@@ -453,6 +482,21 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   // Project Mutations
   const saveProject = async (projInput: any) => {
     const id = projInput.id || `proj_${Date.now()}`;
+    const existing = allProjects.find((p) => p.id === id);
+    const orig = PROJECTS.find((o) => o.id === id);
+
+    // Determine final video asset/URL safely without accidental overwriting
+    let finalVideo: string | null = null;
+    if (projInput.video_url !== undefined && projInput.video_url !== '') {
+      finalVideo = projInput.video_url;
+    } else if (projInput.video !== undefined && projInput.video !== '') {
+      finalVideo = projInput.video;
+    } else if (existing?.video) {
+      finalVideo = existing.video;
+    } else if (orig?.video) {
+      finalVideo = orig.video;
+    }
+
     const row = {
       id,
       title: projInput.title,
@@ -477,9 +521,9 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       tools: projInput.tools || [],
       skills: projInput.skills || [],
       tags: projInput.tags || [],
-      thumbnail_url: projInput.thumbnail_url || projInput.image || '',
+      thumbnail_url: projInput.thumbnail_url || projInput.image || existing?.image || orig?.image || '',
       screenshots: projInput.screenshots || [],
-      video_url: projInput.video_url || projInput.video || null,
+      video_url: finalVideo,
       prototype_url: projInput.prototype_url || null,
       live_url: projInput.live_url || projInput.link || null,
       case_study_url: projInput.case_study_url || projInput.externalLink || null,
@@ -495,16 +539,21 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       const mapped = {
         ...row,
         image: row.thumbnail_url,
-        video: row.video_url || undefined,
+        video: finalVideo || undefined,
         externalLink: row.case_study_url || row.live_url || undefined,
         description: row.full_description || row.short_description,
       } as any;
+      let next: Project[];
       if (idx >= 0) {
-        const next = [...prev];
+        next = [...prev];
         next[idx] = mapped;
-        return next;
+      } else {
+        next = [mapped, ...prev];
       }
-      return [mapped, ...prev];
+      if (!isSupabaseConfigured()) {
+        saveLocal('projects', next);
+      }
+      return next;
     });
 
     if (!isSupabaseConfigured()) {
@@ -522,7 +571,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const deleteProject = async (id: string) => {
-    setAllProjects((prev) => prev.filter((p) => p.id !== id));
+    setAllProjects((prev) => {
+      const next = prev.filter((p) => p.id !== id);
+      if (!isSupabaseConfigured()) {
+        saveLocal('projects', next);
+      }
+      return next;
+    });
 
     if (!isSupabaseConfigured()) {
       return { success: true };
@@ -557,6 +612,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setResume(updated);
 
     if (!isSupabaseConfigured()) {
+      saveLocal('resume', updated);
       return { success: true };
     }
 
@@ -578,14 +634,16 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const deleteResume = async () => {
-    setResume({
+    const blank: ResumeInfo = {
       filename: '',
       file_url: '',
       file_size: 0,
       is_active: false,
-    });
+    };
+    setResume(blank);
 
     if (!isSupabaseConfigured()) {
+      saveLocal('resume', blank);
       return { success: true };
     }
 
@@ -605,6 +663,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setProfile(next);
 
     if (!isSupabaseConfigured()) {
+      saveLocal('profile', next);
       return { success: true };
     }
 
@@ -651,12 +710,17 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         location: row.location,
         bullets: row.responsibilities,
       };
+      let next: ExperienceItem[];
       if (idx >= 0) {
-        const next = [...prev];
+        next = [...prev];
         next[idx] = item;
-        return next;
+      } else {
+        next = [item, ...prev];
       }
-      return [item, ...prev];
+      if (!isSupabaseConfigured()) {
+        saveLocal('experiences', next);
+      }
+      return next;
     });
 
     if (!isSupabaseConfigured()) {
@@ -674,7 +738,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const deleteExperience = async (id: string) => {
-    setExperiences((prev) => prev.filter((e) => e.id !== id));
+    setExperiences((prev) => {
+      const next = prev.filter((e) => e.id !== id);
+      if (!isSupabaseConfigured()) {
+        saveLocal('experiences', next);
+      }
+      return next;
+    });
 
     if (!isSupabaseConfigured()) {
       return { success: true };
@@ -707,12 +777,17 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     setSkills((prev) => {
       const idx = prev.findIndex((s) => s.id === id);
+      let next: SkillItem[];
       if (idx >= 0) {
-        const next = [...prev];
+        next = [...prev];
         next[idx] = row;
-        return next;
+      } else {
+        next = [...prev, row];
       }
-      return [...prev, row];
+      if (!isSupabaseConfigured()) {
+        saveLocal('skills', next);
+      }
+      return next;
     });
 
     if (!isSupabaseConfigured()) {
@@ -730,7 +805,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const deleteSkill = async (id: string) => {
-    setSkills((prev) => prev.filter((s) => s.id !== id));
+    setSkills((prev) => {
+      const next = prev.filter((s) => s.id !== id);
+      if (!isSupabaseConfigured()) {
+        saveLocal('skills', next);
+      }
+      return next;
+    });
 
     if (!isSupabaseConfigured()) {
       return { success: true };
@@ -767,12 +848,17 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     setCertifications((prev) => {
       const idx = prev.findIndex((c) => c.id === id);
+      let next: CertificationItem[];
       if (idx >= 0) {
-        const next = [...prev];
+        next = [...prev];
         next[idx] = row;
-        return next;
+      } else {
+        next = [...prev, row];
       }
-      return [...prev, row];
+      if (!isSupabaseConfigured()) {
+        saveLocal('certifications', next);
+      }
+      return next;
     });
 
     if (!isSupabaseConfigured()) {
@@ -790,7 +876,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const deleteCertification = async (id: string) => {
-    setCertifications((prev) => prev.filter((c) => c.id !== id));
+    setCertifications((prev) => {
+      const next = prev.filter((c) => c.id !== id);
+      if (!isSupabaseConfigured()) {
+        saveLocal('certifications', next);
+      }
+      return next;
+    });
 
     if (!isSupabaseConfigured()) {
       return { success: true };
@@ -812,6 +904,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setContact(next);
 
     if (!isSupabaseConfigured()) {
+      saveLocal('contact', next);
       return { success: true };
     }
 
@@ -834,6 +927,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setSettings(next);
 
     if (!isSupabaseConfigured()) {
+      saveLocal('settings', next);
       return { success: true };
     }
 

@@ -104,30 +104,11 @@ export const AdminLogin: React.FC = () => {
       <div className="relative z-10 w-full max-w-md">
         {/* Supabase Configuration Warning Card if not configured */}
         {!isConfigured && (
-          <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 space-y-2.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 font-medium text-amber-300">
-                <AlertCircle size={16} />
-                <span>Local Preview Mode Active</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail('ux.varunsurya@gmail.com');
-                  setPassword('admin123');
-                }}
-                className="text-[11px] font-mono text-amber-300 hover:text-white underline transition-colors"
-              >
-                Click to Auto-fill
-              </button>
-            </div>
-            <p className="leading-relaxed text-amber-200/80">
-              Supabase credentials not yet detected in <code className="bg-black/30 px-1 py-0.5 rounded text-amber-300 font-mono">.env</code>. You can test the full admin dashboard right now using these demo credentials:
+          <div className="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 flex items-start gap-2.5">
+            <AlertCircle size={16} className="text-amber-400 shrink-0 mt-0.5" />
+            <p className="leading-relaxed">
+              Supabase authentication service is not connected. Add <code className="bg-black/30 px-1 py-0.5 rounded text-amber-300 font-mono">VITE_SUPABASE_URL</code> and <code className="bg-black/30 px-1 py-0.5 rounded text-amber-300 font-mono">VITE_SUPABASE_ANON_KEY</code> to your environment variables to sign in.
             </p>
-            <div className="bg-black/40 rounded-xl p-2.5 font-mono text-[11px] text-amber-200 flex flex-col gap-1 border border-white/5">
-              <div>Email: <span className="text-white">ux.varunsurya@gmail.com</span></div>
-              <div>Password: <span className="text-white">admin123</span></div>
-            </div>
           </div>
         )}
 
@@ -176,7 +157,7 @@ export const AdminLogin: React.FC = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ux.varunsurya@gmail.com"
+                  placeholder="admin@example.com"
                   autoComplete="email"
                   required
                   className="w-full bg-bg border border-stroke focus:border-[#89AACC] rounded-2xl px-4 py-3 text-xs sm:text-sm text-text-primary placeholder:text-muted/40 outline-none transition-colors pl-10"
