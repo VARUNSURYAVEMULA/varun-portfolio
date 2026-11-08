@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const configured = isSupabaseConfigured();
 
   const envAdminEmail = (import.meta.env.VITE_ADMIN_EMAIL || 'ux.varunsurya@gmail.com').trim().toLowerCase();
-  const envAdminPassword = import.meta.env.VITE_ADMIN_PASSWORD;
+  const envAdminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'vvs@124';
 
   useEffect(() => {
     if (!configured) {
