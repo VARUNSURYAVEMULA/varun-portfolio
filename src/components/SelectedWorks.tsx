@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PROJECTS } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import { Project } from '../types';
 
 interface SelectedWorksProps {
@@ -8,6 +8,8 @@ interface SelectedWorksProps {
 }
 
 export const SelectedWorks: React.FC<SelectedWorksProps> = ({ onProjectClick }) => {
+  const { projects } = usePortfolio();
+
   return (
     <section id="works" className="bg-bg py-12 md:py-16">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
@@ -58,7 +60,7 @@ export const SelectedWorks: React.FC<SelectedWorksProps> = ({ onProjectClick }) 
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-6">
-          {PROJECTS.map((project, index) => {
+          {projects.map((project, index) => {
             const colSpanClass = project.span === 7 ? 'md:col-span-7' : 'md:col-span-5';
 
             return (

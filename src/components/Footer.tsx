@@ -3,17 +3,25 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { MailIcon, LinkedinIcon, BehanceIcon } from './Icons';
 import { CONTACT_INFO } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const MARQUEE_TEXT = 'DESIGNING CALM, HUMAN-FIRST EXPERIENCES • '.repeat(8);
 
-const SOCIAL_LINKS = [
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/varunsuryavemula' },
-  { name: 'Behance', url: 'https://www.behance.net/varunsurya1' },
-  { name: 'Email', url: 'mailto:ux.varunsurya@gmail.com' },
-];
-
 export const Footer: React.FC = () => {
+  const { contact, profile } = usePortfolio();
   const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
+
+  const email = contact?.email || CONTACT_INFO.email;
+  const linkedinUrl = contact?.linkedin_url || CONTACT_INFO.socials.linkedin;
+  const behanceUrl = contact?.behance_url || CONTACT_INFO.socials.behance;
+
+  const socialLinks = [
+    { name: 'LinkedIn', url: linkedinUrl },
+    { name: 'Behance', url: behanceUrl },
+    ...(contact?.github_url ? [{ name: 'GitHub', url: contact.github_url }] : []),
+    ...(contact?.dribbble_url ? [{ name: 'Dribbble', url: contact.dribbble_url }] : []),
+    { name: 'Email', url: `mailto:${email}` },
+  ];
 
   // GSAP Infinite Marquee: xPercent: -50, duration 40, ease "none", repeat -1
   useEffect(() => {
@@ -88,13 +96,13 @@ export const Footer: React.FC = () => {
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-full">
           {/* Primary Email Button (Solid Pill with Accent Glow Ring) */}
           <a
-            href="mailto:ux.varunsurya@gmail.com"
+            href={`mailto:${email}`}
             className="group relative inline-flex items-center justify-center rounded-full text-xs sm:text-base font-medium p-[1.5px] transition-transform duration-300 hover:scale-105"
           >
             <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[1px]" />
             <span className="relative z-10 inline-flex items-center gap-2 sm:gap-2.5 rounded-full px-5 sm:px-7 py-3 sm:py-3.5 bg-text-primary text-bg group-hover:bg-bg group-hover:text-text-primary transition-colors duration-300 font-medium">
               <MailIcon size={16} className="currentColor shrink-0" />
-              <span className="break-all sm:break-normal">ux.varunsurya@gmail.com</span>
+              <span className="break-all sm:break-normal">{email}</span>
               <span className="text-xs sm:text-base transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 ↗
               </span>
@@ -102,32 +110,36 @@ export const Footer: React.FC = () => {
           </a>
 
           {/* Secondary LinkedIn Button (Surface Pill with Accent Glow Ring) */}
-          <a
-            href="https://www.linkedin.com/in/varunsuryavemula"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center rounded-full text-xs sm:text-base font-medium p-[1.5px] transition-transform duration-300 hover:scale-105"
-          >
-            <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[1px]" />
-            <span className="relative z-10 inline-flex items-center gap-2 sm:gap-2.5 rounded-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-surface border border-stroke text-text-primary group-hover:border-transparent transition-colors duration-300 font-medium">
-              <LinkedinIcon size={16} className="text-text-primary shrink-0" />
-              <span>LinkedIn</span>
-            </span>
-          </a>
+          {linkedinUrl && (
+            <a
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center rounded-full text-xs sm:text-base font-medium p-[1.5px] transition-transform duration-300 hover:scale-105"
+            >
+              <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[1px]" />
+              <span className="relative z-10 inline-flex items-center gap-2 sm:gap-2.5 rounded-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-surface border border-stroke text-text-primary group-hover:border-transparent transition-colors duration-300 font-medium">
+                <LinkedinIcon size={16} className="text-text-primary shrink-0" />
+                <span>LinkedIn</span>
+              </span>
+            </a>
+          )}
 
           {/* Secondary Behance Button (Surface Pill with Accent Glow Ring) */}
-          <a
-            href="https://www.behance.net/varunsurya1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center rounded-full text-xs sm:text-base font-medium p-[1.5px] transition-transform duration-300 hover:scale-105"
-          >
-            <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[1px]" />
-            <span className="relative z-10 inline-flex items-center gap-2 sm:gap-2.5 rounded-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-surface border border-stroke text-text-primary group-hover:border-transparent transition-colors duration-300 font-medium">
-              <BehanceIcon size={16} className="text-text-primary shrink-0" />
-              <span>Behance</span>
-            </span>
-          </a>
+          {behanceUrl && (
+            <a
+              href={behanceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center justify-center rounded-full text-xs sm:text-base font-medium p-[1.5px] transition-transform duration-300 hover:scale-105"
+            >
+              <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-[1px]" />
+              <span className="relative z-10 inline-flex items-center gap-2 sm:gap-2.5 rounded-full px-4 sm:px-6 py-2.5 sm:py-3.5 bg-surface border border-stroke text-text-primary group-hover:border-transparent transition-colors duration-300 font-medium">
+                <BehanceIcon size={16} className="text-text-primary shrink-0" />
+                <span>Behance</span>
+              </span>
+            </a>
+          )}
         </div>
       </motion.div>
 
@@ -146,7 +158,7 @@ export const Footer: React.FC = () => {
 
         {/* Social Links */}
         <div className="flex items-center gap-6">
-          {SOCIAL_LINKS.map((social) => (
+          {socialLinks.map((social) => (
             <a
               key={social.name}
               href={social.url}
@@ -161,7 +173,7 @@ export const Footer: React.FC = () => {
 
         {/* Right Info */}
         <div className="text-xs text-muted/60 font-mono">
-          &copy; {new Date().getFullYear()} Varun Surya Vemula &bull; Hyderabad, IN
+          &copy; {new Date().getFullYear()} {profile?.full_name || 'Varun Surya Vemula'} &bull; {profile?.location || 'Hyderabad, IN'}
         </div>
       </div>
     </footer>

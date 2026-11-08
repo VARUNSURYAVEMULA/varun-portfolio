@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDownToLine, Moon, Sun, Menu, X } from 'lucide-react';
 import { USER_INFO } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 interface NavbarProps {
   onResumeClick?: () => void;
@@ -25,6 +26,9 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick }) => {
+  const { resume, settings } = usePortfolio();
+  const resumeUrl = resume?.file_url || USER_INFO.resumeUrl || '/resume.pdf';
+  const showResume = settings.is_resume_visible !== false;
   const [isFullWidth, setIsFullWidth] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('Home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -201,20 +205,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
         {/* 3. Right Section: Resume Button + Moon/Theme Toggle + Mobile Hamburger */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Resume Pill Button (Clean, crisp without glow or grow scaling) */}
-          <a
-            href={USER_INFO.resumeUrl || '/resume.pdf'}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Download / View Resume"
-            className="group relative inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#89AACC] to-[#4E85BF] hover:brightness-110 px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-white transition-all duration-200 shadow-sm"
-          >
-            <ArrowDownToLine
-              size={14}
-              strokeWidth={2.2}
-              className="transition-transform duration-200 group-hover:translate-y-0.5"
-            />
-            <span>Resume</span>
-          </a>
+          {showResume && (
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download / View Resume"
+              className="group relative inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#89AACC] to-[#4E85BF] hover:brightness-110 px-3.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-white transition-all duration-200 shadow-sm"
+            >
+              <ArrowDownToLine
+                size={14}
+                strokeWidth={2.2}
+                className="transition-transform duration-200 group-hover:translate-y-0.5"
+              />
+              <span>Resume</span>
+            </a>
+          )}
 
           {/* Mobile Menu Hamburger Toggle (Visible on Mobile) */}
           <button
@@ -277,21 +283,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
                   );
                 })}
 
-                <div className="h-px bg-white/10 my-1 mx-2" />
-
-                <a
-                  href={USER_INFO.resumeUrl || '/resume.pdf'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium text-text-primary hover:bg-white/5 transition-all"
-                >
-                  <span className="flex items-center gap-2">
-                    <ArrowDownToLine size={14} className="text-[#89AACC]" />
-                    <span>Resume (PDF)</span>
-                  </span>
-                  <span className="text-xs text-muted/60">↗</span>
-                </a>
+                {showResume && (
+                  <>
+                    <div className="h-px bg-white/10 my-1 mx-2" />
+                    <a
+                      href={resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium text-text-primary hover:bg-white/5 transition-all"
+                    >
+                      <span className="flex items-center gap-2">
+                        <ArrowDownToLine size={14} className="text-[#89AACC]" />
+                        <span>Resume (PDF)</span>
+                      </span>
+                      <span className="text-xs text-muted/60">↗</span>
+                    </a>
+                  </>
+                )}
               </div>
             </motion.div>
           </>

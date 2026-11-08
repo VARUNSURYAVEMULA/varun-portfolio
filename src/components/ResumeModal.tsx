@@ -1,12 +1,10 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePortfolio } from '../context/PortfolioContext';
 import {
-  USER_INFO,
-  EXPERIENCES,
   RESUME_SKILLS,
   RESUME_PROJECTS,
   RESUME_EDUCATION,
-  RESUME_CERTIFICATIONS,
 } from '../data/portfolioData';
 import { MailIcon, LinkedinIcon, BehanceIcon } from './Icons';
 import { Phone, MapPin, GraduationCap, Award, ExternalLink, ArrowDownToLine } from 'lucide-react';
@@ -17,6 +15,27 @@ interface ResumeModalProps {
 }
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
+  const { profile, experiences, resume, certifications, contact, skills } = usePortfolio();
+
+  // Group dynamic skills if available
+  const groupedSkills = React.useMemo(() => {
+    const visibleSkills = (skills || []).filter((s) => s.is_visible !== false);
+    if (!visibleSkills || visibleSkills.length === 0) {
+      return {
+        Design: RESUME_SKILLS.design,
+        Research: RESUME_SKILLS.research,
+        Tools: RESUME_SKILLS.tools,
+      };
+    }
+    const grouped: Record<string, string[]> = {};
+    visibleSkills.forEach((s) => {
+      const cat = s.category || 'Other';
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(s.name);
+    });
+    return grouped;
+  }, [skills]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -49,40 +68,40 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 Curriculum Vitae
               </span>
               <h2 className="text-3xl sm:text-4xl font-display italic text-text-primary mt-1">
-                {USER_INFO.name}
+                {profile.full_name}
               </h2>
               <p className="text-xs sm:text-sm text-[#89AACC] font-medium mt-1.5">
-                {USER_INFO.role}
+                {profile.designation}
               </p>
 
               {/* Contact & Profiles Meta Bar */}
               <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-muted font-light mt-3.5 pt-3 border-t border-stroke/40">
-                {USER_INFO.phone && (
+                {contact.phone && (
                   <a
-                    href={`tel:${USER_INFO.phone.replace(/\s+/g, '')}`}
+                    href={`tel:${contact.phone.replace(/\s+/g, '')}`}
                     className="flex items-center gap-1.5 hover:text-text-primary transition-colors"
                   >
                     <Phone size={13} className="text-[#89AACC]" />
-                    <span>{USER_INFO.phone}</span>
+                    <span>{contact.phone}</span>
                   </a>
                 )}
                 <span className="text-muted/40 hidden sm:inline">&bull;</span>
                 <a
-                  href={`mailto:${USER_INFO.email}`}
+                  href={`mailto:${contact.email}`}
                   className="flex items-center gap-1.5 hover:text-text-primary transition-colors"
                 >
                   <MailIcon size={13} className="text-[#89AACC]" />
-                  <span>{USER_INFO.email}</span>
+                  <span>{contact.email}</span>
                 </a>
                 <span className="text-muted/40 hidden sm:inline">&bull;</span>
                 <span className="flex items-center gap-1.5 text-muted">
                   <MapPin size={13} className="text-[#89AACC]" />
-                  <span>{USER_INFO.location}</span>
+                  <span>{contact.location || profile.location}</span>
                 </span>
                 <span className="text-muted/40 hidden sm:inline">&bull;</span>
                 <div className="flex items-center gap-3">
                   <a
-                    href={USER_INFO.socials.linkedin}
+                    href={contact.linkedin_url}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-1 hover:text-text-primary transition-colors"
@@ -91,7 +110,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                     <span>LinkedIn</span>
                   </a>
                   <a
-                    href={USER_INFO.socials.behance}
+                    href={contact.behance_url}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-1 hover:text-text-primary transition-colors"
@@ -104,13 +123,13 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </div>
 
             {/* Objective */}
-            {USER_INFO.objective && (
+            {profile.objective && (
               <div className="mb-8">
                 <h3 className="text-xs text-muted uppercase tracking-widest font-mono mb-2.5">
                   Objective
                 </h3>
                 <div className="p-4 rounded-2xl bg-white/[0.02] border border-stroke/60 text-xs sm:text-sm text-text-primary/90 font-light leading-relaxed">
-                  {USER_INFO.objective}
+                  {profile.objective}
                 </div>
               </div>
             )}
@@ -122,7 +141,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               </h3>
 
               <div className="border-l border-stroke pl-4 sm:pl-5 space-y-6">
-                {EXPERIENCES.map((item) => (
+                {experiences.map((item) => (
                   <div key={item.id}>
                     <div className="flex items-start sm:items-center justify-between gap-2 flex-col sm:flex-row">
                       <h4 className="text-base font-medium text-text-primary">
@@ -151,56 +170,23 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 Skills &amp; Capabilities
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {/* Design */}
-                <div className="p-4 rounded-2xl bg-white/[0.02] border border-stroke/60">
-                  <div className="text-xs font-medium text-[#89AACC] uppercase tracking-wider mb-2.5">
-                    Design
+                {Object.entries(groupedSkills).map(([catName, skillList]) => (
+                  <div key={catName} className="p-4 rounded-2xl bg-white/[0.02] border border-stroke/60">
+                    <div className="text-xs font-medium text-[#89AACC] uppercase tracking-wider mb-2.5">
+                      {catName}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {skillList.map((skill) => (
+                        <span
+                          key={skill}
+                          className="text-[11px] px-2.5 py-1 rounded-full bg-stroke/30 border border-stroke/60 text-text-primary/90"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {RESUME_SKILLS.design.map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-[11px] px-2.5 py-1 rounded-full bg-stroke/30 border border-stroke/60 text-text-primary/90"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Research */}
-                <div className="p-4 rounded-2xl bg-white/[0.02] border border-stroke/60">
-                  <div className="text-xs font-medium text-[#89AACC] uppercase tracking-wider mb-2.5">
-                    Research
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {RESUME_SKILLS.research.map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-[11px] px-2.5 py-1 rounded-full bg-stroke/30 border border-stroke/60 text-text-primary/90"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tools */}
-                <div className="p-4 rounded-2xl bg-white/[0.02] border border-stroke/60">
-                  <div className="text-xs font-medium text-[#89AACC] uppercase tracking-wider mb-2.5">
-                    Tools
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {RESUME_SKILLS.tools.map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-[11px] px-2.5 py-1 rounded-full bg-stroke/30 border border-stroke/60 text-text-primary/90"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -277,20 +263,49 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                   Certifications
                 </h3>
                 <div className="space-y-3">
-                  {RESUME_CERTIFICATIONS.map((cert) => (
+                  {(certifications && certifications.length > 0
+                    ? certifications.map((c) => ({
+                        id: c.id,
+                        name: c.name,
+                        org: c.issuing_organization,
+                        url: c.credential_url,
+                        date: c.issue_date,
+                      }))
+                    : [
+                        {
+                          id: 'cert-1',
+                          name: 'UI/UX Design Specialization',
+                          org: 'Comprehensive UI/UX & Visual Design Mastery',
+                          url: undefined,
+                          date: undefined,
+                        },
+                      ]
+                  ).map((cert) => (
                     <div
-                      key={cert}
+                      key={cert.id || cert.name}
                       className="p-4 rounded-2xl bg-white/[0.02] border border-stroke/60 flex items-start gap-3"
                     >
                       <div className="w-8 h-8 rounded-xl bg-stroke/30 border border-stroke/60 flex items-center justify-center shrink-0 mt-0.5">
                         <Award size={16} className="text-[#89AACC]" />
                       </div>
-                      <div>
-                        <div className="text-xs sm:text-sm font-medium text-text-primary">
-                          {cert}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-1.5">
+                          <div className="text-xs sm:text-sm font-medium text-text-primary truncate">
+                            {cert.name}
+                          </div>
+                          {cert.url && (
+                            <a
+                              href={cert.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-[#89AACC] hover:text-white transition-colors shrink-0"
+                            >
+                              <ExternalLink size={12} />
+                            </a>
+                          )}
                         </div>
                         <div className="text-xs text-muted mt-0.5">
-                          Comprehensive UI/UX &amp; Visual Design Mastery
+                          {cert.org} {cert.date ? `• ${cert.date}` : ''}
                         </div>
                       </div>
                     </div>
@@ -326,7 +341,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <div className="pt-6 border-t border-stroke flex items-center justify-between gap-3 flex-wrap">
               <div className="flex items-center gap-3">
                 <a
-                  href={USER_INFO.resumeUrl || '/resume.pdf'}
+                  href={resume.file_url || '/resume.pdf'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative inline-flex items-center text-xs sm:text-sm rounded-full p-[1.5px] transition-transform duration-200 hover:scale-105"
@@ -340,7 +355,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 </a>
 
                 <a
-                  href="mailto:ux.varunsurya@gmail.com?subject=Product%20Design%20Opportunity"
+                  href={`mailto:${contact?.email || 'ux.varunsurya@gmail.com'}?subject=Product%20Design%20Opportunity`}
                   className="px-4 py-2 rounded-full border border-stroke text-xs text-muted hover:text-white hover:bg-stroke/40 transition-colors hidden sm:inline-flex"
                 >
                   Get in Touch &rarr;

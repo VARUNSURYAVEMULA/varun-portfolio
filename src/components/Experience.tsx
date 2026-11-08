@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { EXPERIENCES } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export const Experience: React.FC = () => {
+  const { experiences } = usePortfolio();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -54,7 +55,7 @@ export const Experience: React.FC = () => {
 
           {/* Right Column: Timeline */}
           <div className="lg:col-span-7 relative">
-            {EXPERIENCES.map((item) => (
+            {experiences.map((item) => (
               <div key={item.id} className="relative pl-7 sm:pl-10">
                 {/* Vertical Timeline Track Line */}
                 <div className="absolute left-2.5 top-3 bottom-0 w-[2px] bg-stroke/60 overflow-hidden">

@@ -3,6 +3,7 @@ import Hls from 'hls.js';
 import gsap from 'gsap';
 
 import { USER_INFO } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 interface HeroProps {
   isLoadingComplete: boolean;
@@ -12,10 +13,18 @@ interface HeroProps {
 const HLS_STREAM_URL = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
 
 export const Hero: React.FC<HeroProps> = ({ isLoadingComplete, onContactClick }) => {
+  const { profile } = usePortfolio();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const heroRef = useRef<HTMLDivElement | null>(null);
   const [roleIndex, setRoleIndex] = useState(0);
-  const ROLES = USER_INFO.roles;
+
+  // If profile designation is present, include it in roles if not already present
+  const ROLES = React.useMemo(() => {
+    if (profile?.designation && !USER_INFO.roles.includes(profile.designation)) {
+      return [profile.designation, ...USER_INFO.roles];
+    }
+    return USER_INFO.roles;
+  }, [profile?.designation]);
 
   // Setup HLS Video
   useEffect(() => {
@@ -123,12 +132,12 @@ export const Hero: React.FC<HeroProps> = ({ isLoadingComplete, onContactClick })
           >
             {ROLES[roleIndex]}
           </span>
-          <span>based in Hyderabad, IN.</span>
+          <span>based in {profile?.location || 'Hyderabad, IN.'}</span>
         </div>
 
         {/* Description */}
         <p className="blur-in text-sm md:text-base text-muted max-w-lg mb-12 leading-relaxed">
-          {USER_INFO.tagline}
+          {profile?.short_intro || USER_INFO.tagline}
         </p>
 
         {/* CTA Buttons */}

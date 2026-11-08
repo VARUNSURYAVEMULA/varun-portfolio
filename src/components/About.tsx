@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, HeartPulse, Compass, Layers } from 'lucide-react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 interface FeatureCard {
   icon: React.ReactNode;
@@ -8,30 +9,32 @@ interface FeatureCard {
   description: string;
 }
 
-const FEATURES: FeatureCard[] = [
-  {
-    icon: <Sparkles className="w-5 h-5 text-[#89AACC]" />,
-    title: '1.8+ year shipping product',
-    description: 'End-to-end UI/UX across healthcare, enterprise dashboards and mobile apps.',
-  },
-  {
-    icon: <HeartPulse className="w-5 h-5 text-[#89AACC]" />,
-    title: 'Healthcare specialist',
-    description: 'Radiology, kidney health, claims and hospital operations — designed with clinicians, not for them.',
-  },
-  {
-    icon: <Compass className="w-5 h-5 text-[#89AACC]" />,
-    title: 'Strategy → Visuals',
-    description: 'UX strategy, IA, wireframes, prototypes and pixel-precise visual design.',
-  },
-  {
-    icon: <Layers className="w-5 h-5 text-[#89AACC]" />,
-    title: 'Design systems',
-    description: 'Reusable, themeable component libraries that scale with engineering teams.',
-  },
-];
-
 export const About: React.FC = () => {
+  const { profile } = usePortfolio();
+
+  const FEATURES: FeatureCard[] = [
+    {
+      icon: <Sparkles className="w-5 h-5 text-[#89AACC]" />,
+      title: `${profile.years_of_experience || '1.8+'} year shipping product`,
+      description: 'End-to-end UI/UX across healthcare, enterprise dashboards and mobile apps.',
+    },
+    {
+      icon: <HeartPulse className="w-5 h-5 text-[#89AACC]" />,
+      title: 'Healthcare specialist',
+      description: 'Radiology, kidney health, claims and hospital operations — designed with clinicians, not for them.',
+    },
+    {
+      icon: <Compass className="w-5 h-5 text-[#89AACC]" />,
+      title: 'Strategy → Visuals',
+      description: 'UX strategy, IA, wireframes, prototypes and pixel-precise visual design.',
+    },
+    {
+      icon: <Layers className="w-5 h-5 text-[#89AACC]" />,
+      title: 'Design systems',
+      description: 'Reusable, themeable component libraries that scale with engineering teams.',
+    },
+  ];
+
   return (
     <section id="about" className="relative bg-bg py-20 md:py-32 overflow-hidden border-t border-stroke/40">
       {/* Subtle radial ambient glow behind the grid */}
@@ -66,7 +69,11 @@ export const About: React.FC = () => {
 
             {/* Description */}
             <p className="text-sm md:text-base text-muted font-light leading-relaxed max-w-md">
-              I&apos;m Varun &mdash; a product designer focused on healthcare and enterprise software. I believe interfaces should reduce the cognitive load of complex work, not add to it. I work closely with engineers, clinicians and operators to ship things that actually get used.
+              {profile.about_description || (
+                <>
+                  I&apos;m Varun &mdash; a product designer focused on healthcare and enterprise software. I believe interfaces should reduce the cognitive load of complex work, not add to it. I work closely with engineers, clinicians and operators to ship things that actually get used.
+                </>
+              )}
             </p>
           </motion.div>
 
