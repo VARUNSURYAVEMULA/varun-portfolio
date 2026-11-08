@@ -97,8 +97,14 @@ export const Experience: React.FC = () => {
                   </div>
 
                   {/* Role & Location Subtitle */}
-                  <div className="relative z-10 text-sm sm:text-base font-medium text-[#89AACC] tracking-tight mb-6">
-                    {item.role}
+                  <div className="relative z-10 text-sm sm:text-base font-medium text-[#89AACC] tracking-tight mb-6 flex items-center gap-2 flex-wrap">
+                    <span>{item.role}</span>
+                    {item.location && (
+                      <>
+                        <span className="text-muted/60">&bull;</span>
+                        <span className="text-muted font-normal text-xs sm:text-sm">{item.location}</span>
+                      </>
+                    )}
                   </div>
 
                   {/* Responsibilities Bullets */}

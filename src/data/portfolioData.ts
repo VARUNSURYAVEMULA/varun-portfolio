@@ -1,24 +1,27 @@
-import { Project, JournalEntry, ExplorationItem, StatItem, ExperienceItem } from '../types';
+import { Project, JournalEntry, ExplorationItem, StatItem, ExperienceItem, EducationItem, ResumeProjectItem } from '../types';
 import demoVideo from '../assets/demo.mp4';
 import radflowVideo from '../assets/Radflow.mp4';
 
 export const USER_INFO = {
-  name: 'Varun Surya Vemula',
+  name: 'Vemula Varun Surya',
   shortName: 'Varun Surya',
   initials: 'VS',
   role: 'UI/UX Designer | Product Designer',
   eyebrow: "COLLECTION '26 • PRODUCT DESIGN",
   location: 'Hyderabad, India',
+  phone: '+91 9573434978',
   email: 'ux.varunsurya@gmail.com',
   tagline: 'Designing intuitive digital experiences for healthcare and enterprise platforms.',
   bio: "I'm Varun — a product designer focused on healthcare and enterprise software. I believe interfaces should reduce the cognitive load of complex work, not add to it. I work closely with engineers, clinicians, and operators to ship things that actually get used.",
+  objective:
+    'With 1.8+ year of experience designing interfaces for healthcare and enterprise platforms, I aim to create meaningful and user-centered digital solutions. I focus on delivering intuitive and efficient user experiences through thoughtful design and continuous learning. My goal is to grow as a UI/UX designer while contributing effectively to impactful digital products.',
   socials: {
     linkedin: 'https://www.linkedin.com/in/varunsuryavemula',
     behance: 'https://www.behance.net/varunsurya1',
     github: 'https://github.com/varunsurya',
     email: 'mailto:ux.varunsurya@gmail.com',
   },
-  resumeUrl: 'https://drive.google.com/file/d/1_YOUR_GOOGLE_DRIVE_RESUME_LINK/view?usp=sharing',
+  resumeUrl: '/resume.pdf',
   roles: [
     'Product Designer',
     'UI/UX Specialist',
@@ -41,17 +44,55 @@ export const CONTACT_INFO = {
 export const EXPERIENCES: ExperienceItem[] = [
   {
     id: 'achala-it-solutions',
-    company: 'Achala IT Solutions',
-    role: 'Software Engineer · UI/UX · Hyderabad, IN',
+    company: 'Achala IT Solutions Private Limited',
+    role: 'UI/UX Designer',
     period: 'Feb 2025 — Present',
     location: 'Hyderabad, IN',
     bullets: [
-      'Lead designer for a suite of healthcare platforms spanning radiology, kidney health, and hospital operations.',
-      'Designed responsive web and native mobile applications, owning the journey from low-fi wireframes to production-ready UI.',
-      'Built reusable design systems with developers — shipped 40+ shared components, cutting design-to-dev handoff time by ~35%.',
-      'Ran weekly usability sessions with clinicians and operations staff; iterated on flows that reduced task completion time by 22%.',
+      'Designed user-centric web and mobile interfaces aligned with business and user needs.',
+      'Delivered end-to-end UI/UX solutions for NephroPlus Guest App, Claim Assure, PEP Call Centre CRM, Claims Admin, and Radiologist Mobile App.',
+      'Collaborated with product managers, developers, and stakeholders to translate requirements into wireframes, mockups, and interactive prototypes.',
+      'Contributed to healthcare platforms and mobile applications, ensuring usability and design consistency.',
+      'Utilized tools such as Figma, Photoshop, and Illustrator for design execution and developer handoff.',
+      'Collaborated on requirement analysis, estimation, and iterative design enhancements.',
     ],
   },
+];
+
+export const RESUME_SKILLS = {
+  design: ['UX Strategy', 'User Flows', 'Wireframes', 'Prototypes', 'Mockups'],
+  research: ['User Interviews', 'Usability Testing', 'Persona Hypothesis', 'Competitor Analysis'],
+  tools: ['Figma', 'Adobe XD', 'Photoshop', 'Illustrator', 'After Effects'],
+};
+
+export const RESUME_PROJECTS: ResumeProjectItem[] = [
+  {
+    title: 'NephroPlus Guest App',
+    description:
+      'Designed a live patient healthcare app for nephrology and dialysis patients across India and the Philippines, covering appointment booking, health trends, CKD education, lifestyle guidance, rewards, and community features. Focused on creating calm, accessible experiences for long-term patient care and collaborated with developers to deliver production-ready designs.',
+    link: 'https://play.google.com/store/apps/details?id=com.nephroplus.guest',
+    linkLabel: 'Live Link',
+  },
+  {
+    title: 'Blood Donation Mobile App (Life Line)',
+    description:
+      'Designed a user-friendly mobile application that connects users with nearby blood donors in real time. The app addresses the critical shortage of blood by enabling timely access during emergencies, accidents, and medical conditions. Focused on clean UI, smooth navigation, and accessibility.',
+    link: 'https://www.behance.net/gallery/209200287/Blood-Donation-Mobile-App-%28LIFE-LINE%29',
+    linkLabel: 'Behance Link',
+  },
+];
+
+export const RESUME_EDUCATION: EducationItem[] = [
+  {
+    degree: 'B.Tech – Computer Science and Designing',
+    institution: 'SRKR Engineering College',
+    period: '2021 – 2025',
+    cgpa: '7.66',
+  },
+];
+
+export const RESUME_CERTIFICATIONS: string[] = [
+  'Master Visual & UI/UX Design',
 ];
 
 export const PROJECTS: Project[] = [
@@ -197,7 +238,7 @@ export const EXPLORATIONS: ExplorationItem[] = [
 
 export const STATS: StatItem[] = [
   {
-    value: '1.5+',
+    value: '1.8+',
     label: 'Years Shipping Product',
     description: 'End-to-end UI/UX across healthcare platforms, enterprise SaaS dashboards, and consumer mobile apps.',
   },

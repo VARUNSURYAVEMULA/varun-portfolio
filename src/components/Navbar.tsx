@@ -202,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Resume Pill Button (Clean, crisp without glow or grow scaling) */}
           <a
-            href={USER_INFO.resumeUrl || 'https://drive.google.com/'}
+            href={USER_INFO.resumeUrl || '/resume.pdf'}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Download / View Resume"
@@ -276,6 +276,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onResumeClick, onContactClick })
                     </button>
                   );
                 })}
+
+                <div className="h-px bg-white/10 my-1 mx-2" />
+
+                <a
+                  href={USER_INFO.resumeUrl || '/resume.pdf'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium text-text-primary hover:bg-white/5 transition-all"
+                >
+                  <span className="flex items-center gap-2">
+                    <ArrowDownToLine size={14} className="text-[#89AACC]" />
+                    <span>Resume (PDF)</span>
+                  </span>
+                  <span className="text-xs text-muted/60">↗</span>
+                </a>
               </div>
             </motion.div>
           </>

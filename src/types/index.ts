@@ -48,3 +48,17 @@ export interface ExperienceItem {
   location: string;
   bullets: string[];
 }
+
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  period: string;
+  cgpa: string;
+}
+
+export interface ResumeProjectItem {
+  title: string;
+  description: string;
+  link?: string;
+  linkLabel?: string;
+}

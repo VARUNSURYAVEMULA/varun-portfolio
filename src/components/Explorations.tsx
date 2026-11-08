@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EXPLORATIONS } from '../data/portfolioData';
 import { ExplorationItem } from '../types';
+import { DribbbleIcon } from './Icons';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -124,6 +125,7 @@ export const Explorations: React.FC = () => {
           >
             <span className="absolute inset-0 rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative z-10 inline-flex items-center gap-2 rounded-full bg-surface border border-stroke px-6 py-3 text-text-primary font-medium transition-colors">
+              <DribbbleIcon size={16} className="text-[#EA4C89] shrink-0" />
               <span>View on Dribbble</span>
               <span className="text-xs transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                 ↗

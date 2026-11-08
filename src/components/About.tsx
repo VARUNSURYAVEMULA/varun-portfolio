@@ -11,7 +11,7 @@ interface FeatureCard {
 const FEATURES: FeatureCard[] = [
   {
     icon: <Sparkles className="w-5 h-5 text-[#89AACC]" />,
-    title: '1.5+ year shipping product',
+    title: '1.8+ year shipping product',
     description: 'End-to-end UI/UX across healthcare, enterprise dashboards and mobile apps.',
   },
   {
